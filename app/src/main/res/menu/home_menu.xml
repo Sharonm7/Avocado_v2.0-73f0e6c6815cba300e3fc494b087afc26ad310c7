@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+
+
+<item
+    android:id="@+id/action_searchId"
+    android:title="חיפוש"
+    android:icon="@mipmap/ic_search"
+    app:showAsAction="always"
+    app:actionViewClass="androidx.appcompat.widget.SearchView"/>
+
+    <item
+        android:id="@+id/action_homeId"
+        android:title="בית"
+        android:icon="@mipmap/ic_home"
+        app:showAsAction="never"/>
+
+
+
+    <item
+        android:id="@+id/action_accountId"
+        android:title="החשבון שלי"
+        android:icon="@mipmap/ic_account"
+        app:showAsAction="never"/>
+
+
+
+    <item
+        android:id="@+id/action_notificationId"
+        android:icon="@mipmap/ic_notification"
+        android:title="התראות"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_genresId"
+        android:title="ז'אנרים"
+        app:showAsAction="never"/>
+
+    <item
+    android:id="@+id/action_moviesId"
+    android:title="סרטים חדשים"
+    app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_tvShowsId"
+        android:title="סדרות חדשות"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_calendar"
+        android:title="לוח שנה"
+        app:showAsAction="never"/>
+
+
+    <item
+        android:id="@+id/action_signOutId"
+        android:icon="@mipmap/ic_close"
+        android:title="התנתק"
+        app:showAsAction="never"/>
+
+
+
+
+
+
+
+
+
+</menu>
