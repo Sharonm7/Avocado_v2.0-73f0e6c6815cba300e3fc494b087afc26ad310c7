@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.example.avocado1.DatabaseAccess;
 
 import androidx.annotation.NonNull;
@@ -35,7 +36,7 @@ import java.util.ListIterator;
 import java.util.Map;
 
 
-class TMDBRecyclerViewAdapter extends RecyclerView.Adapter<TMDBRecyclerViewAdapter.TMDBMovieHolder>{
+class TMDBRecyclerViewAdapter extends RecyclerView.Adapter<TMDBRecyclerViewAdapter.TMDBMovieHolder> {
 
     private static final String TAG = "TMDBRecyclerViewAdapter";
     private List<Movie> mMoviesList;
@@ -44,8 +45,9 @@ class TMDBRecyclerViewAdapter extends RecyclerView.Adapter<TMDBRecyclerViewAdapt
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private DatabaseReference myRef;
-    private List <String> followingMovies;
-    private DatabaseAccess dba= new DatabaseAccess();
+    private List<String> followingMovies;
+    private DatabaseAccess dba = new DatabaseAccess();
+    private ArrayList<Movie> movieArrayList;
 
 
     public TMDBRecyclerViewAdapter(Context context, List<Movie> moviesList) {
@@ -73,10 +75,10 @@ class TMDBRecyclerViewAdapter extends RecyclerView.Adapter<TMDBRecyclerViewAdapt
         final Movie movieItem = mMoviesList.get(position);
         Log.d(TAG, "onBindViewHolder: " + movieItem.getTitle() + "==>" + position);
         Picasso.get().load(movieItem.getPoster_path())
-                     .error(R.drawable.baseline_broken_image_black_48dp)
-                     .placeholder(R.drawable.baseline_broken_image_black_48dp)
-                     .placeholder(R.drawable.baseline_broken_image_black_48dp)
-                     .into(holder.moviePoster);
+                .error(R.drawable.baseline_broken_image_black_48dp)
+                .placeholder(R.drawable.baseline_broken_image_black_48dp)
+                .placeholder(R.drawable.baseline_broken_image_black_48dp)
+                .into(holder.moviePoster);
 
         holder.title.setText(movieItem.getTitle());
         holder.overview.setText(movieItem.getOverview());
@@ -99,38 +101,14 @@ class TMDBRecyclerViewAdapter extends RecyclerView.Adapter<TMDBRecyclerViewAdapt
 
 
 */
-
         holder.followBtn.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-
-                String movieTitle= null;
-                String movieOverview= null;
-                movieTitle= movieItem.getTitle();
-                movieOverview= movieItem.getOverview();
-
-
-
-
-
-//                followingMovies.add(movieTitle);
-
-                updateMoviesToDataBase(followingMovies,movieItem);
-                followingMovies= updateFollowing(followingMovies, movieItem);
-
-
-
-
-
-
+                updateMoviesToDataBase(movieItem);
             }
         });
-
-
-
     }
-
 
 
     @Override
@@ -139,7 +117,7 @@ class TMDBRecyclerViewAdapter extends RecyclerView.Adapter<TMDBRecyclerViewAdapt
         return ((mMoviesList != null) && (mMoviesList.size() != 0) ? mMoviesList.size() : 0);
     }
 
-    void loadNewData(List<Movie> newMovies){
+    void loadNewData(List<Movie> newMovies) {
         mMoviesList = newMovies;
         notifyDataSetChanged();
     }
@@ -148,7 +126,7 @@ class TMDBRecyclerViewAdapter extends RecyclerView.Adapter<TMDBRecyclerViewAdapt
 //        return ((mMoviesList != null) && (mMoviesList.size() != 0) ? mMoviesList.get(position) : null);
 //    }
 
-    static class TMDBMovieHolder extends RecyclerView.ViewHolder{
+    static class TMDBMovieHolder extends RecyclerView.ViewHolder {
 
         private static final String TAG = "TMDBMovieHolder";
         public LinearLayout newMoviesLinearLayout;
@@ -156,7 +134,7 @@ class TMDBRecyclerViewAdapter extends RecyclerView.Adapter<TMDBRecyclerViewAdapt
 
         ImageView moviePoster = null;
         TextView title = null;
-        TextView overview= null;
+        TextView overview = null;
         Button followBtn;
 
 
@@ -165,12 +143,12 @@ class TMDBRecyclerViewAdapter extends RecyclerView.Adapter<TMDBRecyclerViewAdapt
         public TMDBMovieHolder(@NonNull View itemView) {
             super(itemView);
 
-            newMoviesLinearLayout= (LinearLayout) itemView.findViewById(R.id.contentmoviedetail);
+            newMoviesLinearLayout = (LinearLayout) itemView.findViewById(R.id.contentmoviedetail);
             Log.d(TAG, "TMDBMovieHolder: starts");
-            this.moviePoster = (ImageView)itemView.findViewById(R.id.moviePoster);
-            this.title = (TextView)itemView.findViewById(R.id.movieTitle);
-            this.overview = (TextView)itemView.findViewById(R.id.movieOverview);
-            this.followBtn= (Button) itemView.findViewById(R.id.followBtn);
+            this.moviePoster = (ImageView) itemView.findViewById(R.id.moviePoster);
+            this.title = (TextView) itemView.findViewById(R.id.movieTitle);
+            this.overview = (TextView) itemView.findViewById(R.id.movieOverview);
+            this.followBtn = (Button) itemView.findViewById(R.id.followBtn);
 
 
         }
@@ -178,49 +156,11 @@ class TMDBRecyclerViewAdapter extends RecyclerView.Adapter<TMDBRecyclerViewAdapt
 
     }
 
-    private void updateMoviesToDataBase(final List <String> followingMovies, final Movie movieItem) {
-
-
-        myRef = FirebaseDatabase.getInstance().getReference("Users");
-
-        final String userName = mAuth.getCurrentUser().getDisplayName();
-
-                String movieItemStr = String.valueOf(movieItem.getId());
-                ArrayList<Movie>  movieArrayList;
-
-//                myRef.child(userName).child("followingMovies").setValue(followingMovies);
-//                myRef.child(userName).child("followingMovies").setValue(movieItem.getId());
-//                myRef.child(userName).child("followingMovies").child(movieItemStr);
-                myRef.child(userName).child("followingMovies").child(movieItemStr).child("title").setValue(movieItem.getTitle());
-                myRef.child(userName).child("followingMovies").child(movieItemStr).child("poster").setValue(movieItem.getPoster_path());
-                myRef.child(userName).child("followingMovies").child(movieItemStr).child("overview").setValue(movieItem.getOverview());
-                myRef.child(userName).child("followingMovies").child(movieItemStr).child("popularity").setValue(movieItem.getPopularity());
+    private void updateMoviesToDataBase(Movie movieItem) {
+        myRef = FirebaseDatabase.getInstance().getReference("Users").child(mAuth.getCurrentUser().getDisplayName());
+        myRef.child("followingMovies").child(movieItem.getId()).setValue(movieItem);
 
     }
 
-    private List<String> updateFollowing ( final List<String> followingMovies, final Movie movieItem){
 
-        mAuth = FirebaseAuth.getInstance();
-        myRef = FirebaseDatabase.getInstance().getReference("Users");
-        final String userName = mAuth.getCurrentUser().getDisplayName();
-        final String movieItemStr = String.valueOf(movieItem.getId());
-
-
-        myRef.child(userName).child("followingMovies").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-              //  Map<String, Movie> map = (Map<String, Movie>) dataSnapshot.getValue();
-             //   Log.d("mapmap:", map.toString());
-              //  followingMovies.add(movieItemStr);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
-
-      //  Toast.makeText(mContext, "following movies is now:"+followingMovies, Toast.LENGTH_LONG).show();
-
-        return followingMovies;
-    }
 }

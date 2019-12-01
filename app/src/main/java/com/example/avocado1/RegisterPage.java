@@ -26,6 +26,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -64,11 +65,11 @@ public class RegisterPage extends AppCompatActivity {
 
         String id = userRef.push().getKey();
         //example
-        List<String> Preferences = Arrays.asList("");
-        List<String> followingMovies = Arrays.asList("");
-        List<String> followingTvShows = Arrays.asList("");
+        ArrayList<String> Preferences = new ArrayList<>();
 
-        User user = new User(id, Email, Password, UserName);
+        ArrayList<Movie> followingTvShows = new ArrayList<>();
+
+        User user = new User(id, Email, Password, UserName, Preferences,followingTvShows);
 
 
         userRef.child(UserName);

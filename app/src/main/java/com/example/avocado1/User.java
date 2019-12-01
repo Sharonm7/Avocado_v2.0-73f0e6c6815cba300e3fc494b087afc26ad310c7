@@ -2,7 +2,6 @@ package com.example.avocado1;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class User {
     public static User u;
@@ -10,27 +9,29 @@ public class User {
     private String email;
     private String password;
     private String username;
-    private List<String> Preferences;
-    private Map<String,Movie> followingMovies;
-    private Map<String,TvShow> followingTVshows ;
+    private ArrayList<String> Preferences;
+    private List<Movie> followingMovies;
+    private ArrayList<Movie> followingTVshows ;  //TODO: Change to TvShow class
 
 
-    public User() {
-    }
+//    public User(String id, String email, String password, String userName) {
+//        this.id = id;
+//        this.email = email;
+//        this.username = userName;
+//        this.password = password;
+//    }
 
-    public User(String id, String email, String password, String userName) {
-
-    }
-
-    public User(String id, String email, String password, String userName, ArrayList<String> preferences, Map<String, Movie> favmovies, Map<String, TvShow> favTVshows) {
+    public User(String id, String email,String password, String userName,ArrayList<String> preferences, ArrayList<Movie> followingTVshows) {
         this.id = id;
         this.email = email;
-        this.password = password;
-        username = userName;
-        Preferences = preferences;
-        followingMovies= favmovies;
-        followingTVshows= favTVshows;
+        this.username = userName;
+        this.Preferences = preferences;
+        this.followingTVshows= followingTVshows;
 
+
+    }
+
+    public User() {
 
     }
 
@@ -66,27 +67,27 @@ public class User {
         this.username = username;
     }
 
-    public List<String> getPreferences() {
+    public ArrayList<String> getPreferences() {
         return Preferences;
     }
 
-    public void setPreferences(List<String> preferences) {
+    public void setPreferences(ArrayList<String> preferences) {
         Preferences = preferences;
     }
 
-    public Map<String, Movie> getFollowingMovies() {
+    public List<Movie> getFollowingMovies() {
         return followingMovies;
     }
 
-    public Map<String, TvShow> getFollowingTVshows() {
+    public ArrayList<Movie> getFollowingTVshows() {
         return followingTVshows;
     }
 
-    public void setFollowingMovies(Map<String, Movie> followingMovies) {
+    public void setFollowingMovies(List<Movie> followingMovies) {
         this.followingMovies = followingMovies;
     }
 
-    public void setFollowingTVshows(Map<String, TvShow> followingTVshows) {
+    public void setFollowingTVshows(ArrayList<Movie> followingTVshows) {
         this.followingTVshows = followingTVshows;
     }
 }

@@ -1,81 +1,107 @@
 package com.example.avocado1;
+import com.google.firebase.database.IgnoreExtraProperties;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@IgnoreExtraProperties
 class Movie {
 
-    private int id;
+    private String id;
     private boolean video;
     private double vote_average;
     private String title;
     private double popularity;
     private String poster_path;
-    private String original_language;
     private String overview;
     private String release_date;
+
+//  private String backdrop_path;
 //  private int vote_count;
 //  private String original_title;
-    private List <Integer> genre_ids;
-//  private String backdrop_path;
 //  private boolean adult;
 
 
-    Movie(String video, String vote_average, String title, String poster_path, String overview, String release_date, double popularity, int id, List genre_ids) {
-
-        this.video = Boolean.parseBoolean(video);
-        this.vote_average = Double.parseDouble(vote_average);
+    public Movie(String id, boolean video, double vote_average, String title, double popularity, String poster_path, String overview, String release_date) {
+        this.id = id;
+        this.video = video;
+        this.vote_average = vote_average;
         this.title = title;
+        this.popularity = popularity;
         this.poster_path = poster_path;
-        this.original_language = original_language;
         this.overview = overview;
         this.release_date = release_date;
-        this.popularity= popularity;
-        this.id= id;
-        this.genre_ids= genre_ids;
     }
 
-    int getId() {
+
+
+    public Movie() {
+
+    }
+
+
+    public String getId() {
         return id;
     }
 
-    boolean isVideo() {
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public boolean isVideo() {
         return video;
     }
 
-    double getVote_average() {
+    public void setVideo(boolean video) {
+        this.video = video;
+    }
+
+    public double getVote_average() {
         return vote_average;
     }
 
-    String getTitle() {
+    public void setVote_average(double vote_average) {
+        this.vote_average = vote_average;
+    }
+
+    public String getTitle() {
         return title;
     }
 
-    double getPopularity() {
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public double getPopularity() {
         return popularity;
     }
 
-    String getPoster_path() {
+    public void setPopularity(double popularity) {
+        this.popularity = popularity;
+    }
+
+    public String getPoster_path() {
         return poster_path;
     }
 
-    String getOriginal_language() {
-        return original_language;
+    public void setPoster_path(String poster_path) {
+        this.poster_path = poster_path;
     }
 
-    String getOverview() {
+    public String getOverview() {
         return overview;
     }
 
-    String getRelease_date() {
+    public void setOverview(String overview) {
+        this.overview = overview;
+    }
+
+    public String getRelease_date() {
         return release_date;
     }
 
-    public List<Integer> getGenre_ids() {
-        return genre_ids;
-    }
-
-    public void setGenre_ids(List<Integer> genre_ids) {
-        this.genre_ids = genre_ids;
+    public void setRelease_date(String release_date) {
+        this.release_date = release_date;
     }
 
     @Override
@@ -87,10 +113,8 @@ class Movie {
                 ", title='" + title + '\'' +
                 ", popularity=" + popularity +
                 ", poster_path='" + poster_path + '\'' +
-                ", original_language='" + original_language + '\'' +
                 ", overview='" + overview + '\'' +
                 ", release_date='" + release_date + '\'' +
-                ", genre_ids='" + genre_ids + '\'' +
                 '}';
     }
 }
