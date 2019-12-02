@@ -89,11 +89,11 @@ class GetTMDBTVJsonData extends AsyncTask<String, Void, List<TvShow>> implements
                 for(int i=0; i<resultsArray.length(); i++){
 
                     JSONObject jMovie = resultsArray.getJSONObject(i);
-                    String title = jMovie.getString("title");
+                    String title = jMovie.getString("name");
                     String vote_avg = jMovie.getString("vote_average");
                     String overview = jMovie.getString("overview");
-                    String trailer = jMovie.getString("video");
-                    String release_date = jMovie.getString("release_date");
+                   // String trailer = jMovie.getString("video");
+                    String release_date = jMovie.getString("first_air_date");
                     String poster = jMovie.getString("poster_path");
                     String id = jMovie.getString("id");
                     double popularity = jMovie.getDouble("popularity");
@@ -103,7 +103,7 @@ class GetTMDBTVJsonData extends AsyncTask<String, Void, List<TvShow>> implements
                     // Example of Lion King poster request ==>  https://image.tmdb.org/t/p/original/fILTFOc4uV1mYL0qkoc3LyG1Jo9.jpg
                     // Discover size poster request ==>  https://image.tmdb.org/t/p/w92/fILTFOc4uV1mYL0qkoc3LyG1Jo9.jpg
 
-                    TvShow tvShow = new TvShow(id, Boolean.parseBoolean(trailer), Double.parseDouble(vote_avg), title ,popularity, poster, overview, release_date );
+                    TvShow tvShow = new TvShow(id, Double.parseDouble(vote_avg), title ,popularity, poster, overview, release_date );
                     tvShowList.add(tvShow);
 
                     Log.d(TAG, "onDownloadComplete: " + tvShow.toString());

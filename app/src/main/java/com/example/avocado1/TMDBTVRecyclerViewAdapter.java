@@ -103,11 +103,6 @@ class TMDBTVRecyclerViewAdapter extends RecyclerView.Adapter<TMDBTVRecyclerViewA
 
 
 
-
-
-
-
-
     }
 
 

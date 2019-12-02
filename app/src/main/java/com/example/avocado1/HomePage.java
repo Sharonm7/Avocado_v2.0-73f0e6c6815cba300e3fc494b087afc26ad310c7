@@ -24,6 +24,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -76,6 +77,7 @@ public class HomePage extends AppCompatActivity
     TextView textViewDisplayFollowingMovies;
     TextView textViewDisplayFollowingTvshows;
     private ImageView imageViewDisplayMoviePoster;
+    private Button btnAddMovieToCal;
 
 
     private TMDBRecyclerViewAdapter mTMDBRecyclerViewAdapter;
@@ -122,6 +124,9 @@ public class HomePage extends AppCompatActivity
         // DisplayFollowing();
         setOnUserListener();
 
+
+
+
     }
 
     @Override
@@ -143,7 +148,7 @@ public class HomePage extends AppCompatActivity
 
     }
 
-    private void updateGenres(final List<String> genres) {
+        private void updateGenres(final List<String> genres) {
 
         myRef = FirebaseDatabase.getInstance().getReference("Users");
         final String userName = mAuth.getCurrentUser().getDisplayName();
@@ -303,12 +308,12 @@ public class HomePage extends AppCompatActivity
 
 
     private void setOnUserListener() {
+//
 
-        mAuth = FirebaseAuth.getInstance();
+
+            mAuth = FirebaseAuth.getInstance();
             myRef = FirebaseDatabase.getInstance().getReference("Users").child(mAuth.getCurrentUser().getDisplayName()).child("followingMovies");
 //        final String userName = mAuth.getCurrentUser().getDisplayName();
-
-        //Log.d("xxxx"+user.getFollowingMovies());
 
 
         myRef.addValueEventListener(new ValueEventListener() {
@@ -322,9 +327,6 @@ public class HomePage extends AppCompatActivity
                 Iterator it = td.entrySet().iterator();
 
                 while (it.hasNext()) {
-
-//                  Map<String, Movie> map = it.next().getValue();
-//                  Iterator it1 = map.entrySet().iterator();
 
                     Map.Entry pair = (Map.Entry)it.next();
 
@@ -389,6 +391,9 @@ public class HomePage extends AppCompatActivity
 
 
     }
+
+
+
 
 
     @Override

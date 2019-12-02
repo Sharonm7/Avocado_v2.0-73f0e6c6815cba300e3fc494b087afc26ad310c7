@@ -70,9 +70,18 @@
             android:id="@+id/moviePoster"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="150dp"
             android:scaleType="fitCenter"
             app:srcCompat="@drawable/baseline_movie_black_48" />
+
+        <Button
+            android:id="@+id/addToCal"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="150dp"
+            android:textAllCaps="false" />
+
 
 
         <TextView

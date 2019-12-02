@@ -15,10 +15,9 @@ public class TvShow {
     public TvShow() {
     }
 
-    TvShow(String id, boolean video, double vote_average, String title, double popularity, String poster_path, String overview, String release_date) {
+    TvShow(String id, double vote_average, String title, double popularity, String poster_path, String overview, String release_date) {
 
         this.id = id;
-        this.video = video;
         this.vote_average = vote_average;
         this.title = title;
         this.popularity = popularity;
@@ -35,14 +34,6 @@ public class TvShow {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public boolean isVideo() {
-        return video;
-    }
-
-    public void setVideo(boolean video) {
-        this.video = video;
     }
 
     public double getVote_average() {
@@ -98,7 +89,6 @@ public class TvShow {
     public String toString() {
         return "TvShow{" +
                 "id=" + id +
-                ", video=" + video +
                 ", vote_average=" + vote_average +
                 ", title='" + title + '\'' +
                 ", popularity=" + popularity +
