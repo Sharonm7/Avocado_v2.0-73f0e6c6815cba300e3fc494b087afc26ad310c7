@@ -44,7 +44,7 @@
             android:layout_width="0dp"
             android:layout_weight="3"
             android:textColor="#fff"
-            android:text="@string/eventDesc"
+            android:text=""
             android:layout_height="wrap_content" />
 
         <TextView
@@ -89,20 +89,6 @@
         android:orientation="horizontal"
         android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/eventLocationLabel"
-            android:layout_width="0dp"
-            android:layout_weight="3"
-            android:textColor="#fff"
-            android:text="@string/eventLocation"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:id="@+id/eventLocation"
-            android:layout_width="0dp"
-            android:textColor="#fff"
-            android:layout_weight="7"
-            android:layout_height="wrap_content" />
 
     </LinearLayout>
 
@@ -143,7 +129,7 @@
             android:layout_width="0dp"
             android:textColor="#fff"
             android:layout_weight="3"
-            android:text="@string/eventEnd"
+            android:text=""
             android:layout_height="wrap_content" />
 
         <TextView

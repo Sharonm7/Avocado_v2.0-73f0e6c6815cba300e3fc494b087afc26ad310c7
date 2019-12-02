@@ -90,7 +90,8 @@ public class CalendarActivity extends AppCompatActivity implements EasyPermissio
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onBackPressed();
+                Intent HomeIntent = new Intent(getApplicationContext(), HomePage.class);
+                startActivity(HomeIntent);
             }
         });
 
@@ -357,7 +358,6 @@ public class CalendarActivity extends AppCompatActivity implements EasyPermissio
                 scheduledEvents.setEventId(event.getId());
                 scheduledEvents.setDescription(event.getDescription());
                 scheduledEvents.setEventSummery(event.getSummary());
-                scheduledEvents.setLocation(event.getLocation());
                 scheduledEvents.setStartDate(start.toString());
                 scheduledEvents.setEndDate("");
                 StringBuffer stringBuffer = new StringBuffer();
@@ -372,7 +372,6 @@ public class CalendarActivity extends AppCompatActivity implements EasyPermissio
                     scheduledEvents.setAttendees("");
                 }
                 scheduledEventsList.add(scheduledEvents);
-                System.out.println("-----"+event.getDescription()+", "+event.getId()+", "+event.getLocation());
                 System.out.println(event.getAttendees());
                 eventStrings.add(
                         String.format("%s (%s)", event.getSummary(), start));
@@ -418,7 +417,7 @@ public class CalendarActivity extends AppCompatActivity implements EasyPermissio
             }
         }
     }
-    public void createEventAsync(final String summary, final String location, final String des, final DateTime startDate, final DateTime endDate, final EventAttendee[]
+    public void createEventAsync(final String summary, final String des, final DateTime startDate, final DateTime endDate, final EventAttendee[]
             eventAttendees) {
 
         new AsyncTask<Void, Void, String>() {
@@ -430,7 +429,7 @@ public class CalendarActivity extends AppCompatActivity implements EasyPermissio
             @Override
             protected String doInBackground (Void...voids){
                 try {
-                    insertEvent(summary, location, des, startDate, endDate, eventAttendees);
+                    insertEvent(summary,des, startDate, endDate, eventAttendees);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -444,10 +443,9 @@ public class CalendarActivity extends AppCompatActivity implements EasyPermissio
             }
         }.execute();
     }
-    void insertEvent(String summary, String location, String des, DateTime startDate, DateTime endDate, EventAttendee[] eventAttendees) throws IOException {
+    void insertEvent(String summary, String des, DateTime startDate, DateTime endDate, EventAttendee[] eventAttendees) throws IOException {
         Event event = new Event()
                 .setSummary(summary)
-                .setLocation(location)
                 .setDescription(des);
 
         EventDateTime start = new EventDateTime()

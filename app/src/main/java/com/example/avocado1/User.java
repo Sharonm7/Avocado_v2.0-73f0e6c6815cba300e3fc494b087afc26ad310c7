@@ -11,7 +11,7 @@ public class User {
     private String username;
     private ArrayList<String> Preferences;
     private List<Movie> followingMovies;
-    private ArrayList<Movie> followingTVshows ;  //TODO: Change to TvShow class
+    private ArrayList<TvShow> followingTvShows ;
 
 
 //    public User(String id, String email, String password, String userName) {
@@ -21,12 +21,14 @@ public class User {
 //        this.password = password;
 //    }
 
-    public User(String id, String email,String password, String userName,ArrayList<String> preferences, ArrayList<Movie> followingTVshows) {
+    public User(String id, String email,String password, String userName,ArrayList<String> preferences, ArrayList<Movie> followingMovies, ArrayList<TvShow> followingTvShows) {
         this.id = id;
         this.email = email;
         this.username = userName;
         this.Preferences = preferences;
-        this.followingTVshows= followingTVshows;
+        this.followingMovies= followingMovies;
+        this.followingTvShows= followingTvShows;
+
 
 
     }
@@ -79,16 +81,16 @@ public class User {
         return followingMovies;
     }
 
-    public ArrayList<Movie> getFollowingTVshows() {
-        return followingTVshows;
+    public ArrayList<TvShow> getFollowingTvShows() {
+        return followingTvShows;
     }
 
     public void setFollowingMovies(List<Movie> followingMovies) {
         this.followingMovies = followingMovies;
     }
 
-    public void setFollowingTVshows(ArrayList<Movie> followingTVshows) {
-        this.followingTVshows = followingTVshows;
+    public void setFollowingTvShows(ArrayList<TvShow> followingTvShows) {
+        this.followingTvShows = followingTvShows;
     }
 }
 

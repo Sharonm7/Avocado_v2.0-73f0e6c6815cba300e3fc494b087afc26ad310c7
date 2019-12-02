@@ -128,7 +128,8 @@ public class AccountPage extends AppCompatActivity
         final String userName = mAuth.getCurrentUser().getDisplayName().toString();
 
 
-        myRef.child(userName).addValueEventListener(new ValueEventListener() {
+
+            myRef.child(userName).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 

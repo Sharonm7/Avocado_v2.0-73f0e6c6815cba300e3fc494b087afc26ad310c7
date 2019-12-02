@@ -50,6 +50,23 @@ public class RegisterPage extends AppCompatActivity {
 
 
     private void AddUserToDb(String Email, String Password, String UserName) {
+        Movie m= new Movie();
+        TvShow tv= new TvShow();
+        ArrayList<String> Preferences = new ArrayList<>();
+        Preferences.add("");
+        ArrayList<Movie> followingMovies = new ArrayList<>();
+        ArrayList<TvShow> followingTvShows = new ArrayList<>();
+        followingMovies.add(m);
+        followingTvShows.add(tv);
+
+
+        String id = userRef.push().getKey();
+
+        userRef = FirebaseDatabase.getInstance().getReference("Users");
+//        final String userName = mAuth.getCurrentUser().getDisplayName();
+
+
+
         userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -63,17 +80,16 @@ public class RegisterPage extends AppCompatActivity {
         });
 
 
-        String id = userRef.push().getKey();
-        //example
-        ArrayList<String> Preferences = new ArrayList<>();
 
-        ArrayList<Movie> followingTvShows = new ArrayList<>();
-
-        User user = new User(id, Email, Password, UserName, Preferences,followingTvShows);
+        User user = new User(id, Email, Password, UserName, Preferences,followingMovies,followingTvShows);
 
 
         userRef.child(UserName);
         userRef.child(UserName).setValue(user);
+        userRef.child(UserName).child("preferences").setValue(Preferences);
+        userRef.child(UserName).child("followingMovies").setValue(followingMovies);
+        userRef.child(UserName).child("followingTvShows").setValue(followingTvShows);
+
         progressBar.setVisibility(View.GONE);
         Toast.makeText(RegisterPage.this, "user added to db", Toast.LENGTH_LONG).show();
 

@@ -58,7 +58,6 @@ public class EventListAdapter extends BaseAdapter {
         eventHolder.eventAttendee.setText(scheduledEvents.getAttendees());
         eventHolder.eventStart.setText(scheduledEvents.getStartDate());
         eventHolder.eventEnd.setText(scheduledEvents.getEndDate());
-        eventHolder.eventLocation.setText(scheduledEvents.getLocation());
 
         return convertView;
     }
@@ -71,7 +70,6 @@ public class EventListAdapter extends BaseAdapter {
             eventAttendee = (TextView) item.findViewById(R.id.eventAttendee);
             eventStart = (TextView) item.findViewById(R.id.eventStart);
             eventEnd = (TextView) item.findViewById(R.id.eventEnd);
-            eventLocation = (TextView) item.findViewById(R.id.eventLocation);
         }
     }
 }

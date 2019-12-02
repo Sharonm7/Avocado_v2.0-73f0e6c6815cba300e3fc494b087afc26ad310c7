@@ -46,7 +46,6 @@ public class EventDialog extends DialogFragment implements View.OnClickListener,
 
         eventTitle = (EditText)view.findViewById(R.id.eventTitle);
         eventDes = (EditText)view.findViewById(R.id.eventDes);
-        eventLocation = (EditText)view.findViewById(R.id.eventLocation);
         eventAttendee = (EditText)view.findViewById(R.id.eventAttendee);
 
         startDate = (DatePicker)view.findViewById(R.id.startDate);
@@ -113,7 +112,7 @@ public class EventDialog extends DialogFragment implements View.OnClickListener,
                 StringBuffer buffer = new StringBuffer(eventTitle.getText().toString()+"\n");
                 buffer.append("\n");
                 buffer.append(eventDes.getText().toString());
-                ((CalendarActivity)getActivity()).createEventAsync(eventTitle.getText().toString(), eventLocation.getText().toString(), buffer.toString(), start, end, eventAttendeeEmail );
+                ((CalendarActivity)getActivity()).createEventAsync(eventTitle.getText().toString(), buffer.toString(), start, end, eventAttendeeEmail );
                 dismiss();
                 break;
         }

@@ -82,6 +82,7 @@ public class ChooseGenresPage extends AppCompatActivity {
                     selectedGenres.add("מדע-בדיוני");
                 }
 
+
                 updateDateFromDateBase(selectedGenres);
                 startActivity(new Intent(ChooseGenresPage.this, AccountPage.class));
 
@@ -96,14 +97,18 @@ public class ChooseGenresPage extends AppCompatActivity {
     private void updateDateFromDateBase(final List <String> selectedGenres) {
 
 
+
         myRef = FirebaseDatabase.getInstance().getReference("Users");
 
         final String userName = mAuth.getCurrentUser().getDisplayName().toString();
 
 
+
         myRef.child(userName).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+
+
 
                 myRef.child(userName).child("preferences").setValue(selectedGenres);
 

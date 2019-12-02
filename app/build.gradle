@@ -46,6 +46,8 @@ dependencies {
     implementation 'com.google.android.gms:play-services-auth:9.0.2'
     implementation 'pub.devrel:easypermissions:0.1.5'
     implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'com.facebook.fresco:fresco:1.8.0'
+
 
 
     implementation('com.google.api-client:google-api-client-android:1.22.0') {

@@ -43,7 +43,6 @@ class TMDBTVRecyclerViewAdapter extends RecyclerView.Adapter<TMDBTVRecyclerViewA
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private DatabaseReference myRef;
-    private List <String> followingTvShows= new ArrayList<>();
 
 
     public TMDBTVRecyclerViewAdapter(Context context, List<TvShow> tvShowList) {
@@ -97,23 +96,7 @@ class TMDBTVRecyclerViewAdapter extends RecyclerView.Adapter<TMDBTVRecyclerViewA
         holder.followBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int tvshowId= 0;
-                String tvshowTitle= null;
-                String posterPath= null;
-                String tvshowOverview= null;
-
-
-                tvshowId= tvShowItem.getId();
-                tvshowTitle= tvShowItem.getTitle();
-                posterPath= tvShowItem.getPoster_path();
-                tvshowOverview= tvShowItem.getOverview();
-
-               // followingTvShows.add(tvshowTitle);
-
-                updateTvShowsToDataBase(followingTvShows, tvShowItem);
-
-
-                Toast.makeText(mContext, "following list:"+followingTvShows, Toast.LENGTH_LONG).show();
+                updateTvShowsToDataBase(tvShowItem);
 
             }
         });
@@ -174,22 +157,10 @@ class TMDBTVRecyclerViewAdapter extends RecyclerView.Adapter<TMDBTVRecyclerViewA
 
     }
 
-    private void updateTvShowsToDataBase(final List <String> followingTvShows, final TvShow tvShowItem) {
+    private void updateTvShowsToDataBase(TvShow tvShowItem) {
 
-
-        myRef = FirebaseDatabase.getInstance().getReference("Users");
-
-        final String userName = mAuth.getCurrentUser().getDisplayName();
-
-        String tvShowStr = String.valueOf(tvShowItem.getId());
-
-//                myRef.child(userName).child("followingMovies").setValue(followingMovies);
-//                myRef.child(userName).child("followingMovies").setValue(movieItem.getId());
-//                myRef.child(userName).child("followingMovies").child(movieItemStr);
-        myRef.child(userName).child("followingTvShows").child(tvShowStr).child("title").setValue(tvShowItem.getTitle());
-        myRef.child(userName).child("followingTvShows").child(tvShowStr).child("poster").setValue(tvShowItem.getPoster_path());
-        myRef.child(userName).child("followingTvShows").child(tvShowStr).child("overview").setValue(tvShowItem.getOverview());
-        myRef.child(userName).child("followingTvShows").child(tvShowStr).child("popularity").setValue(tvShowItem.getPopularity());
+        myRef = FirebaseDatabase.getInstance().getReference("Users").child(mAuth.getCurrentUser().getDisplayName());
+        myRef.child("followingTvShows").child(tvShowItem.getId()).setValue(tvShowItem);
 
     }
 }

@@ -18,6 +18,7 @@ import com.example.avocado1.DatabaseAccess;
 
 import android.graphics.Color;
 import android.graphics.LightingColorFilter;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -25,6 +26,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -41,6 +43,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -72,6 +75,9 @@ public class HomePage extends AppCompatActivity
     TextView textViewDisplayGenres;
     TextView textViewDisplayFollowingMovies;
     TextView textViewDisplayFollowingTvshows;
+    private ImageView imageViewDisplayMoviePoster;
+
+
     private TMDBRecyclerViewAdapter mTMDBRecyclerViewAdapter;
     private GetTMDBJsonData getTMDBJsonData;
     // private DatabaseAccess dba= new DatabaseAccess();
@@ -102,6 +108,8 @@ public class HomePage extends AppCompatActivity
         textViewDisplayGenres = (TextView) findViewById(R.id.genres);
         textViewDisplayFollowingMovies = (TextView) findViewById(R.id.followingMovies);
         textViewDisplayFollowingTvshows = (TextView) findViewById(R.id.followingTvshows);
+        imageViewDisplayMoviePoster= (ImageView) findViewById(R.id.moviePoster);
+
 
 
         toolbar = findViewById(R.id.toolbarId);
@@ -109,17 +117,10 @@ public class HomePage extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         loadUserInformation();
-//        updateGenres(genresList);
-        DisplayGenres(buttons);
+        updateGenres(genresList);
+         DisplayGenres(buttons);
         // DisplayFollowing();
-        // str1= dba.getPreferencesFromDatabase(str2);
-        // Toast.makeText(HomePage.this, "preflist from dba"+ str1, Toast.LENGTH_LONG).show();
-
         setOnUserListener();
-        Log.d("user:", "" + this.user);
-
-        //   Toast.makeText(HomePage.this, "following movies from muser"+ userFollow.toString(), Toast.LENGTH_LONG).show();
-
 
     }
 
@@ -136,39 +137,38 @@ public class HomePage extends AppCompatActivity
 
 
         if (fbUser.getDisplayName() != null) {
-            textViewDisplayName.setText("·¯ÂÎÈÌ ‰·‡ÈÌ,  " + fbUser.getDisplayName() + "!");
+            textViewDisplayName.setText("ברוכים הבאים,  " + fbUser.getDisplayName() + "!");
         }
 
 
     }
 
-//    private void updateGenres(final List<String> genres) {
-//
-//        myRef = FirebaseDatabase.getInstance().getReference("Users");
-//        final String userName = mAuth.getCurrentUser().getDisplayName();
-//
-//        myRef.child(userName).addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//
-//                String genres = dataSnapshot.child("preferences").getValue().toString();
-//
-//                genres = genres.replace("[", "");
-//                genres = genres.replace("]", "");
-//
-//                textViewDisplayGenres.setText(genres);
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//
-//        });
-//
-//    }
+    private void updateGenres(final List<String> genres) {
 
+        myRef = FirebaseDatabase.getInstance().getReference("Users");
+        final String userName = mAuth.getCurrentUser().getDisplayName();
+
+            myRef.child(userName).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+
+
+                    String genres = dataSnapshot.child("preferences").getValue().toString();
+
+                    genres = genres.replace("[", "");
+                    genres = genres.replace("]", "");
+
+                    textViewDisplayGenres.setText(genres);
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+
+            });
+    }
 //    private void displayFollowingMovies () {
 //
 //        Map<String, HashMap<String,Movie>> movieMap = this.user.getFollowingMovies();
@@ -228,6 +228,7 @@ public class HomePage extends AppCompatActivity
         myRef.child(userName).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+
                 String genresStr = textViewDisplayGenres.getText().toString();
 
                 long numOfGenres = dataSnapshot.child("preferences").getChildrenCount();
@@ -275,7 +276,6 @@ public class HomePage extends AppCompatActivity
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.buttonsLayout);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
-        int color = 0x5AB300;
 
         for (int i = 0; i < numOfGenres; i++) {
 
@@ -305,7 +305,7 @@ public class HomePage extends AppCompatActivity
     private void setOnUserListener() {
 
         mAuth = FirebaseAuth.getInstance();
-        myRef = FirebaseDatabase.getInstance().getReference("Users").child(mAuth.getCurrentUser().getDisplayName()).child("followingMovies");
+            myRef = FirebaseDatabase.getInstance().getReference("Users").child(mAuth.getCurrentUser().getDisplayName()).child("followingMovies");
 //        final String userName = mAuth.getCurrentUser().getDisplayName();
 
         //Log.d("xxxx"+user.getFollowingMovies());
@@ -317,9 +317,15 @@ public class HomePage extends AppCompatActivity
                 Map<String, Object> td = (HashMap<String,Object>) dataSnapshot.getValue();
 //                List<Object> values = (List<Object>) td.values();
 
-                ArrayList<Movie> arrayList = new ArrayList<>();
+
+                ArrayList<Movie> movieArrayList = new ArrayList<>();
                 Iterator it = td.entrySet().iterator();
+
                 while (it.hasNext()) {
+
+//                  Map<String, Movie> map = it.next().getValue();
+//                  Iterator it1 = map.entrySet().iterator();
+
                     Map.Entry pair = (Map.Entry)it.next();
 
                     System.out.println(pair.getKey() + " = " + pair.getValue());
@@ -331,6 +337,8 @@ public class HomePage extends AppCompatActivity
                             Movie movie = dataSnapshot.getValue(Movie.class);
 
                             System.out.println(movie.toString());
+                            System.out.println(movie.getTitle());
+                            dispalyFollowing(movie);
                         }
 
                         @Override
@@ -351,6 +359,14 @@ public class HomePage extends AppCompatActivity
         });
     }
 
+    private void dispalyFollowing(Movie movie){
+        textViewDisplayFollowingMovies.setText(movie.getTitle());
+        Picasso.get().load("http://image.tmdb.org/t/p/w185/"+movie.getPoster_path()).into(imageViewDisplayMoviePoster);
+
+
+
+    }
+
     private void createUser() {
         if (user == null) {
             this.user = new User();
@@ -361,7 +377,7 @@ public class HomePage extends AppCompatActivity
             this.user.setFollowingMovies((List<Movie>) userMap.get("followingMovies"));
 
         if (userMap.get("followingTvShows") != null)
-            this.user.setFollowingTVshows((ArrayList<Movie>) userMap.get("followingTvShows"));
+            this.user.setFollowingTvShows((ArrayList<TvShow>) userMap.get("followingTvShows"));
         this.user.setId((String) userMap.get("id"));
         this.user.setUsername((String) userMap.get("userName"));
         if (userMap.get("preferences") != null)
