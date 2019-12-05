@@ -25,7 +25,7 @@
     <string name="eventLocation">Location</string>
 
     <string name="createEventTitle">שם הסרט או הסדרה</string>
-    <string name="createEventDesc">תיאור</string>
+    <string name="createEventDesc">תאריך יציאה</string>
     <string name="createEventAttendee">כתובת מייל של לוח השנה</string>
     <string name="createEventStart">מתחיל ב:</string>
     <string name="createEventStartDate">תאריך</string>

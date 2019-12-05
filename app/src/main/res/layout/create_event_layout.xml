@@ -28,7 +28,7 @@
                     android:layout_weight="4"
                     android:text="@string/createEventTitle" />
 
-                <EditText
+                <TextView
                     android:id="@+id/eventTitle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -51,7 +51,7 @@
                     android:layout_weight="4"
                     android:text="@string/createEventDesc"
                     android:layout_height="wrap_content" />
-                <EditText
+                <TextView
                     android:id="@+id/eventDes"
                     android:layout_width="0dp"
                     android:layout_weight="6"
@@ -79,7 +79,7 @@
                 android:background="#dce2e6"
                 android:padding="10dp"
                 android:layout_height="wrap_content">
-                <TextView
+                <EditText
                     android:layout_width="0dp"
                     android:layout_weight="4"
                     android:text="@string/createEventAttendee"
@@ -120,14 +120,14 @@
                     android:layout_weight="7"
                     android:orientation="vertical">
 
-                    <DatePicker
-                        android:id="@+id/startDate"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="4"
-                        android:calendarViewShown="false"
+<!--                    <DatePicker-->
+<!--                        android:id="@+id/startDate"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_weight="4"-->
+<!--                        android:calendarViewShown="false"-->
 
-                        android:datePickerMode="spinner" />
+<!--                        android:datePickerMode="spinner" />-->
 
                     <TimePicker
                         android:id="@+id/startTime"
@@ -156,12 +156,7 @@
                     android:orientation="vertical"
                     android:layout_weight="7"
                     android:layout_height="wrap_content">
-                    <DatePicker
-                        android:id="@+id/endDate"
-                        android:layout_width="wrap_content"
-                        android:calendarViewShown="false"
-                        android:datePickerMode="spinner"
-                        android:layout_height="wrap_content" />
+
                     <TimePicker
                         android:id="@+id/endTime"
                         android:timePickerMode="spinner"

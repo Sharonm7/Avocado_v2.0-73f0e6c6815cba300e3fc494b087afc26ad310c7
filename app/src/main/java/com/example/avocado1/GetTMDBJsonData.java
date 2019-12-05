@@ -106,7 +106,7 @@ class GetTMDBJsonData extends AsyncTask<String, Void, List<Movie>> implements Ge
                     // Example of Lion King poster request ==>  https://image.tmdb.org/t/p/original/fILTFOc4uV1mYL0qkoc3LyG1Jo9.jpg
                     // Discover size poster request ==>  https://image.tmdb.org/t/p/w92/fILTFOc4uV1mYL0qkoc3LyG1Jo9.jpg
 
-                    Movie movie = new Movie(id, Boolean.parseBoolean(trailer), Double.parseDouble(vote_avg), title ,popularity, poster, overview, release_date);
+                    Movie movie = new Movie(id, Boolean.parseBoolean(trailer), Double.parseDouble(vote_avg), title ,popularity, posterLink, overview, release_date);
                     movieList.add(movie);
 
                     Log.d(TAG, "onDownloadComplete: " + movie.toString());

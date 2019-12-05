@@ -10,6 +10,17 @@ public class ScheduledEvents {
     private String startDate;
     private String endDate;
 
+    public ScheduledEvents() {
+    }
+
+    public ScheduledEvents(String eventSummery, String description, String attendees, String startDate, String endDate) {
+        this.eventSummery = eventSummery;
+        this.description = description;
+        this.attendees = attendees;
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
+
     public String getLocation() {
         return location;
     }

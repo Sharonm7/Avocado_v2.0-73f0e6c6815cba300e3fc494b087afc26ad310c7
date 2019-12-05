@@ -15,6 +15,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -44,6 +45,7 @@ import com.example.avocado1.EventListAdapter;
 import com.example.avocado1.EventDialog;
 import com.example.avocado1.CalendarActivity;
 import com.example.avocado1.ScheduledEvents;
+import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -52,6 +54,8 @@ import java.util.List;
 
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
+
+import static android.content.Intent.getIntent;
 
 /**
  * @author Khushvinders
@@ -79,6 +83,19 @@ public class CalendarActivity extends AppCompatActivity implements EasyPermissio
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
 
+        final String movieTitle = getIntent().getStringExtra("title");
+       // final String movieDate = getIntent().getStringExtra("date");
+        final String movieDate = "2019-12-10";
+
+        final String userEmail = getIntent().getStringExtra("email");
+
+        System.out.println("xxxxxxx"+movieTitle);
+        System.out.println("xxxxxxx"+movieDate);
+        System.out.println("xxxxxxx"+userEmail);
+
+
+
+
         LinearLayout activityLayout = (LinearLayout) findViewById(R.id.calenderLayout);
 
         eventListView = (ListView)findViewById(R.id.eventList);
@@ -90,8 +107,7 @@ public class CalendarActivity extends AppCompatActivity implements EasyPermissio
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent HomeIntent = new Intent(getApplicationContext(), HomePage.class);
-                startActivity(HomeIntent);
+                onBackPressed();
             }
         });
 
@@ -110,7 +126,7 @@ public class CalendarActivity extends AppCompatActivity implements EasyPermissio
         scheduleMeeting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EventDialog eventDialog = new EventDialog();
+                EventDialog eventDialog = new EventDialog(movieDate,movieTitle,userEmail);
                 eventDialog.show(getFragmentManager(), "dialog");
 
                /* Dialog dialog=new Dialog(CalendarActivity.this,android.R.style.Theme_Black_NoTitleBar_Fullscreen);
@@ -358,6 +374,7 @@ public class CalendarActivity extends AppCompatActivity implements EasyPermissio
                 scheduledEvents.setEventId(event.getId());
                 scheduledEvents.setDescription(event.getDescription());
                 scheduledEvents.setEventSummery(event.getSummary());
+                scheduledEvents.setLocation(event.getLocation());
                 scheduledEvents.setStartDate(start.toString());
                 scheduledEvents.setEndDate("");
                 StringBuffer stringBuffer = new StringBuffer();
@@ -372,6 +389,7 @@ public class CalendarActivity extends AppCompatActivity implements EasyPermissio
                     scheduledEvents.setAttendees("");
                 }
                 scheduledEventsList.add(scheduledEvents);
+                System.out.println("-----"+event.getDescription()+", "+event.getId()+", "+event.getLocation());
                 System.out.println(event.getAttendees());
                 eventStrings.add(
                         String.format("%s (%s)", event.getSummary(), start));
@@ -429,7 +447,7 @@ public class CalendarActivity extends AppCompatActivity implements EasyPermissio
             @Override
             protected String doInBackground (Void...voids){
                 try {
-                    insertEvent(summary,des, startDate, endDate, eventAttendees);
+                    insertEvent(summary, des, startDate, endDate, eventAttendees);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

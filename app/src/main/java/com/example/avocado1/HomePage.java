@@ -82,9 +82,6 @@ public class HomePage extends AppCompatActivity
 
     private TMDBRecyclerViewAdapter mTMDBRecyclerViewAdapter;
     private GetTMDBJsonData getTMDBJsonData;
-    // private DatabaseAccess dba= new DatabaseAccess();
-    // public String str1=null;
-    //  public String str2="";
     private Map<String, Movie> userFollow;
 
 
@@ -361,9 +358,29 @@ public class HomePage extends AppCompatActivity
         });
     }
 
-    private void dispalyFollowing(Movie movie){
+    private void dispalyFollowing(final Movie movie){
         textViewDisplayFollowingMovies.setText(movie.getTitle());
+
         Picasso.get().load("http://image.tmdb.org/t/p/w185/"+movie.getPoster_path()).into(imageViewDisplayMoviePoster);
+        imageViewDisplayMoviePoster.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                final FirebaseUser fbUser = mAuth.getCurrentUser();
+
+                Intent intent = new Intent(HomePage.this, CalendarActivity.class);
+                //intent.putExtra("moviedetails", new String[]{movie.getTitle(),movie.getRelease_date()
+
+                intent.putExtra("title", movie.getTitle());
+                intent.putExtra("date",movie.getRelease_date() );
+                intent.putExtra("email",fbUser.getEmail() );
+
+
+
+                startActivity(intent);
+
+            }
+        });
 
 
 

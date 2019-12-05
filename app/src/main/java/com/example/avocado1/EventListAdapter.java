@@ -9,7 +9,9 @@ import android.widget.TextView;
 import com.example.avocado1.R;
 import com.example.avocado1.EventListAdapter;
 import com.example.avocado1.ScheduledEvents;
-
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
 
 
 import java.util.List;
@@ -19,11 +21,18 @@ public class EventListAdapter extends BaseAdapter {
     private Context context;
     private List<ScheduledEvents> scheduledEvents;
     private LayoutInflater inflater;
+    private String userEmail;
+    private FirebaseAuth mAuth;
+    private User user;
+    private DatabaseReference myRef;
+
     public EventListAdapter(Context context, List<ScheduledEvents> scheduledEvents){
         this.context = context;
         this.scheduledEvents = scheduledEvents;
         inflater = LayoutInflater.from(this.context);
     }
+
+
 
     @Override
     public int getCount() {
@@ -32,6 +41,7 @@ public class EventListAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int i) {
+
         return scheduledEvents.get(i);
     }
 
@@ -43,6 +53,11 @@ public class EventListAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         EventHolder eventHolder;
+        mAuth = FirebaseAuth.getInstance();
+        final FirebaseUser fbUser = mAuth.getCurrentUser();
+
+
+
 
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.event_view_layout, parent, false);
@@ -53,14 +68,35 @@ public class EventListAdapter extends BaseAdapter {
         }
         ScheduledEvents scheduledEvents = (ScheduledEvents) getItem(position);
 
+        eventHolder.eventAttendee.setText(scheduledEvents.getAttendees());
         eventHolder.eventTitle.setText(scheduledEvents.getEventSummery());
         eventHolder.eventDes.setText(scheduledEvents.getDescription());
-        eventHolder.eventAttendee.setText(scheduledEvents.getAttendees());
         eventHolder.eventStart.setText(scheduledEvents.getStartDate());
         eventHolder.eventEnd.setText(scheduledEvents.getEndDate());
 
-        return convertView;
-    }
+        System.out.println("1"+fbUser.getEmail());
+        System.out.println("2"+eventHolder.eventAttendee.getText().toString());
+
+
+//        if((eventHolder.eventAttendee.getText().toString())== fbUser.getEmail().toString()) {
+//
+//            setText(scheduledEvents,eventHolder);
+//
+//        }
+
+            return convertView;
+        }
+//
+//     public void setText(ScheduledEvents scheduledEvents, EventHolder eventHolder){
+//
+//         eventHolder.eventTitle.setText(scheduledEvents.getEventSummery());
+//         eventHolder.eventDes.setText(scheduledEvents.getDescription());
+//         //  eventHolder.eventAttendee.setText(scheduledEvents.getAttendees());
+//         eventHolder.eventStart.setText(scheduledEvents.getStartDate());
+//         eventHolder.eventEnd.setText(scheduledEvents.getEndDate());
+//
+//     }
+
     private class EventHolder {
         TextView eventTitle, eventDes, eventAttendee, eventStart, eventEnd, eventLocation;
 

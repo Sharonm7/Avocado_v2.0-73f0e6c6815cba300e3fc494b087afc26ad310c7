@@ -103,7 +103,7 @@ class GetTMDBTVJsonData extends AsyncTask<String, Void, List<TvShow>> implements
                     // Example of Lion King poster request ==>  https://image.tmdb.org/t/p/original/fILTFOc4uV1mYL0qkoc3LyG1Jo9.jpg
                     // Discover size poster request ==>  https://image.tmdb.org/t/p/w92/fILTFOc4uV1mYL0qkoc3LyG1Jo9.jpg
 
-                    TvShow tvShow = new TvShow(id, Double.parseDouble(vote_avg), title ,popularity, poster, overview, release_date );
+                    TvShow tvShow = new TvShow(id, Double.parseDouble(vote_avg), title ,popularity, posterLink, overview, release_date );
                     tvShowList.add(tvShow);
 
                     Log.d(TAG, "onDownloadComplete: " + tvShow.toString());
