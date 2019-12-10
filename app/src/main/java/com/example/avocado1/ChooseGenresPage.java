@@ -28,6 +28,7 @@ public class ChooseGenresPage extends AppCompatActivity {
 
 
     private List<String> selectedGenres;
+    private List<Integer> genredIDs;
     private CheckBox check_action;
     private CheckBox check_drama;
     private CheckBox check_comedy;
@@ -59,6 +60,8 @@ public class ChooseGenresPage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 selectedGenres= new ArrayList<>();
+                genredIDs= new ArrayList<>();
+
                 check_action = findViewById(R.id.check_action);
                 check_comedy = findViewById(R.id.check_comedy);
                 check_drama = findViewById(R.id.check_drama);
@@ -67,23 +70,35 @@ public class ChooseGenresPage extends AppCompatActivity {
 
                 if (check_action.isChecked()) {
                     selectedGenres.add("אקשן");
+                    genredIDs.add(28);
+                    genredIDs.add(80);
+                    genredIDs.add(10759);
 
                 }
                 if (check_comedy.isChecked()){
                     selectedGenres.add("קומדיה");
+                    genredIDs.add(35);
                 }
                 if (check_drama.isChecked()){
                     selectedGenres.add("דרמה");
+                    genredIDs.add(18);
+                    genredIDs.add(10749);
+
                 }
                 if (check_horror.isChecked()){
                     selectedGenres.add("אימה");
+                    genredIDs.add(53);
+                    genredIDs.add(27);
+
                 }
                 if (check_scifi.isChecked()){
                     selectedGenres.add("מדע-בדיוני");
+                    genredIDs.add(878);
+                    genredIDs.add(10765);
                 }
 
 
-                updateDateFromDateBase(selectedGenres);
+                updateToDateBase(selectedGenres, genredIDs);
                 startActivity(new Intent(ChooseGenresPage.this, AccountPage.class));
 
 
@@ -94,7 +109,7 @@ public class ChooseGenresPage extends AppCompatActivity {
 
     }
 
-    private void updateDateFromDateBase(final List <String> selectedGenres) {
+    private void updateToDateBase(final List <String> selectedGenres, final List <Integer> genredIDs) {
 
 
 
@@ -111,6 +126,7 @@ public class ChooseGenresPage extends AppCompatActivity {
 
 
                 myRef.child(userName).child("preferences").setValue(selectedGenres);
+                myRef.child(userName).child("genresId").setValue(genredIDs);
 
             }
             @Override

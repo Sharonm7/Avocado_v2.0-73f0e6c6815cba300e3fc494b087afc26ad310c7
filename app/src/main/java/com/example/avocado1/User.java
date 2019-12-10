@@ -12,6 +12,7 @@ public class User {
     private ArrayList<String> Preferences;
     private List<Movie> followingMovies;
     private ArrayList<TvShow> followingTvShows ;
+    private ArrayList<Integer> genresId;
 
 
 //    public User(String id, String email, String password, String userName) {
@@ -21,13 +22,14 @@ public class User {
 //        this.password = password;
 //    }
 
-    public User(String id, String email,String password, String userName,ArrayList<String> preferences, ArrayList<Movie> followingMovies, ArrayList<TvShow> followingTvShows) {
+    public User(String id, String email,String password, String userName,ArrayList<String> preferences, ArrayList<Movie> followingMovies, ArrayList<TvShow> followingTvShows, ArrayList<Integer> genresId) {
         this.id = id;
         this.email = email;
         this.username = userName;
         this.Preferences = preferences;
         this.followingMovies= followingMovies;
         this.followingTvShows= followingTvShows;
+        this.genresId= genresId;
 
 
 
@@ -91,6 +93,14 @@ public class User {
 
     public void setFollowingTvShows(ArrayList<TvShow> followingTvShows) {
         this.followingTvShows = followingTvShows;
+    }
+
+    public ArrayList<Integer> getGenresId() {
+        return genresId;
+    }
+
+    public void setGenresId(ArrayList<Integer> genresId) {
+        this.genresId = genresId;
     }
 }
 

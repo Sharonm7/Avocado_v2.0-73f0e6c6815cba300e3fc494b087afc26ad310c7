@@ -1,13 +1,14 @@
 package com.example.avocado1;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,22 +21,13 @@ import android.widget.TimePicker;
 
 import com.google.api.client.util.DateTime;
 import com.google.api.services.calendar.model.EventAttendee;
-import com.example.avocado1.R;
-import com.example.avocado1.CalendarActivity;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.ZoneId;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
-
-import  com.example.avocado1.Movie;
-import com.google.gson.Gson;
-
-import static android.content.Intent.getIntent;
 
 
 public class EventDialog extends DialogFragment implements View.OnClickListener, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener{
@@ -49,22 +41,23 @@ public class EventDialog extends DialogFragment implements View.OnClickListener,
     private Button createEvent;
     private Button cancelEvent;
     private TextView eventTitle;
-    private TextView eventDes;
+    private EditText eventDes;
     private TextView eventLocation;
     private EditText eventAttendee;
     private EventAttendee eventAttendeeEmail[];
-    private String eventDate;
+    private String movieDate;
     private String movieTitle;
     private String userEmail;
     public EventDialog ev;
+    private String startTimeString, endTimeString;
 
     public EventDialog() {
     }
 
     @SuppressLint("ValidFragment")
-    public EventDialog(String eventDate, String movieTitle, String userEmail) {
+    public EventDialog(String movieDate, String movieTitle, String userEmail) {
 
-        this.eventDate = eventDate;
+        this.movieDate = movieDate;
         this.movieTitle = movieTitle;
         this.userEmail = userEmail;
     }
@@ -74,11 +67,15 @@ public class EventDialog extends DialogFragment implements View.OnClickListener,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.create_event_layout, container, false);
 
-        getDate(eventDate);
+
+        checkEvent();
+
+
+        getDate(movieDate);
 
 
         eventTitle = (TextView)view.findViewById(R.id.eventTitle);
-        eventDes = (TextView)view.findViewById(R.id.eventDes);
+        eventDes = (EditText)view.findViewById(R.id.eventDes);
         eventAttendee = (EditText)view.findViewById(R.id.eventAttendee);
 
         //startDate = (DatePicker)view.findViewById(R.id.startDate);
@@ -94,7 +91,7 @@ public class EventDialog extends DialogFragment implements View.OnClickListener,
 
 
         eventTitle.setText(movieTitle);
-        eventDes.setText(eventDate);
+        eventDes.setText(movieDate);
         eventAttendee.setText(userEmail);
 
 
@@ -152,14 +149,19 @@ return null;
                 dismiss();
                 break;
             case R.id.createEvent:
+
+
                 Calendar startCalendar = Calendar.getInstance();
+
+
+               // System.out.println(Calendar.HOUR_OF_DAY, startTime.getCurrentMinute());
                 startCalendar.setTimeZone(TimeZone.getTimeZone("Asia/Jerusalem"));
-                startCalendar.set(Calendar.DAY_OF_MONTH,getDay(getDate(eventDate)));
-                startCalendar.set(Calendar.MONTH,getMonth(getDate(eventDate)));
-                startCalendar.set(Calendar.YEAR, getYear(getDate(eventDate)));
-                startCalendar.set(Calendar.HOUR_OF_DAY, startTime.getCurrentMinute()-18);
+                startCalendar.set(Calendar.DAY_OF_MONTH,getDay(getDate(movieDate)));
+                startCalendar.set(Calendar.MONTH,getMonth(getDate(movieDate)));
+                startCalendar.set(Calendar.YEAR, getYear(getDate(movieDate)));
+                startCalendar.set(Calendar.HOUR_OF_DAY, startTime.getCurrentMinute());
                 startCalendar.set(Calendar.MINUTE, startTime.getCurrentMinute());
-                Date startDate = getDate(eventDate);
+                Date startDate = getDate(movieDate);
 
                 DateTime start = new DateTime(startDate);
 
@@ -185,10 +187,45 @@ return null;
                 StringBuffer buffer = new StringBuffer(eventTitle.getText().toString()+"\n");
                 buffer.append("\n");
                 buffer.append(eventDes.getText().toString());
+              //  ((CalendarActivity)getActivity()).createEventAsync();
                 ((CalendarActivity)getActivity()).createEventAsync(eventTitle.getText().toString(), buffer.toString(), start, end, eventAttendeeEmail );
                 dismiss();
                 break;
         }
+    }
+
+    private void checkEvent(){
+
+        SimpleDateFormat formatter= new SimpleDateFormat("dd/MM/yyyy");
+        Date now= new Date();
+        System.out.println("Now is:"+now);
+
+
+        if(getDate(movieDate).before(now)) {
+            System.out.println("you cannot follow");
+
+
+            AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+            dialog.setCancelable(false);
+            dialog.setTitle("תאריך יציאה עבר!");
+            dialog.setMessage("שים לב: לא תוכל לעקוב אחרי תכן ששוחרר בעבר. תכן זה לא יסתנכרן ליומנך.");
+            dialog.setPositiveButton("אישור", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int id) {
+                    //Action for "Delete".
+                }
+            })
+                    .setNegativeButton("",new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                         //vggg
+                        }
+                    });
+
+            final AlertDialog alert = dialog.create();
+            alert.show();
+        }
+
     }
 
     private String startDateString;
@@ -206,7 +243,7 @@ return null;
 //        }
     }
 
-    private String startTimeString, endTimeString;
+
     @Override
     public void onTimeSet(TimePicker timePicker, int i, int i1) {
         switch (timePicker.getId()){

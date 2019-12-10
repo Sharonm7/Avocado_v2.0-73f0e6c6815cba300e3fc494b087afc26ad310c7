@@ -15,6 +15,7 @@ class Movie {
     private String poster_path;
     private String overview;
     private String release_date;
+    private ArrayList <Integer> genre_ids;
 
 //  private String backdrop_path;
 //  private int vote_count;
@@ -22,7 +23,7 @@ class Movie {
 //  private boolean adult;
 
 
-    public Movie(String id, boolean video, double vote_average, String title, double popularity, String poster_path, String overview, String release_date) {
+    public Movie(String id, boolean video, double vote_average, String title, double popularity, String poster_path, String overview, String release_date, ArrayList genre_ids) {
         this.id = id;
         this.video = video;
         this.vote_average = vote_average;
@@ -31,6 +32,7 @@ class Movie {
         this.poster_path = poster_path;
         this.overview = overview;
         this.release_date = release_date;
+        this.genre_ids= genre_ids;
     }
 
 
@@ -104,6 +106,14 @@ class Movie {
         this.release_date = release_date;
     }
 
+    public ArrayList<Integer> getGenre_ids() {
+        return genre_ids;
+    }
+
+    public void setGenre_ids(ArrayList<Integer> genre_ids) {
+        this.genre_ids = genre_ids;
+    }
+
     @Override
     public String toString() {
         return "Movie{" +
@@ -115,6 +125,8 @@ class Movie {
                 ", poster_path='" + poster_path + '\'' +
                 ", overview='" + overview + '\'' +
                 ", release_date='" + release_date + '\'' +
+                ", genre_ids='" + genre_ids + '\'' +
+
                 '}';
     }
 }

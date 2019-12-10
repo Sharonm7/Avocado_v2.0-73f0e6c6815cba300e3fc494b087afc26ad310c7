@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
     android:id="@+id/homeLayout"
     tools:context=".MainActivity"
-    android:orientation="horizontal"
-    tools:showIn="@layout/home_toolbar"
-    >
+    tools:showIn="@layout/home_toolbar">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:orientation="vertical"
         android:layout_alignParentTop="true"
         android:layout_height="wrap_content"
@@ -24,23 +24,16 @@
             android:layout_marginTop="100dp"
             android:text=""
             android:textSize="30dp"
-            android:textAlignment="center"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textAlignment="center"/>
 
         <TextView
             android:id="@+id/selectedGenresText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
+            android:textSize="30dp"
             android:text="הזאנרים שלך:"
-            android:textAlignment="center"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textAlignment="center" />
 
         <TextView
             android:id="@+id/genres"
@@ -48,72 +41,121 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="150dp"
             android:text=""
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             android:visibility="gone"/>
 
-        <TextView
-            android:id="@+id/followingMovies"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/buttonsLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="150dp"
-            android:text="ggg"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:visibility="visible"/>
+            android:orientation="horizontal"
+            >
+        </LinearLayout>
 
-        <ImageView
-            android:id="@+id/moviePoster"
-            android:layout_width="wrap_content"
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="8dp">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="150dp"
-            android:scaleType="fitCenter"
-            app:srcCompat="@drawable/baseline_movie_black_48" />
-
-        <Button
-            android:id="@+id/addToCal"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="150dp"
-            android:textAllCaps="false" />
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="8dp">
 
 
 
-        <TextView
-            android:id="@+id/followingTvshows"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="150dp"
-            android:text=""
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:visibility="gone"/>
+        <LinearLayout
+        android:id="@+id/followingMoviesLayout"
+        android:layout_width="match_parent"
+        android:layout_alignBottom="@+id/linearLayout"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textFollowingMovies"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="התכן שלך:"
+                android:textSize="30dp"
+                android:textAlignment="center" />
 
 
 
+
+            <!--                <TextView-->
+<!--                    android:id="@+id/movieTitle"-->
+<!--                    android:layout_marginTop="150dp"-->
+<!--                    android:text=""-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:gravity="center"-->
+<!--                    android:visibility="visible"/>-->
+
+        <!--        <ImageView-->
+        <!--            android:id="@+id/moviePoster"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="match_parent"-->
+        <!--            android:layout_marginTop="150dp"-->
+        <!--            android:scaleType="fitCenter"-->
+        <!--            android:gravity="center"-->
+        <!--            app:srcCompat="@drawable/baseline_movie_black_48" />-->
+
+
+
+
+            <LinearLayout
+                android:id="@+id/followingTvShowsLayout"
+                android:layout_width="match_parent"
+                android:layout_alignBottom="@+id/linearLayout"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+
+
+            <Button
+                    android:id="@+id/addToCal"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="150dp"
+                    android:textAllCaps="false"
+                    android:text="follow"
+
+                    android:visibility="gone"/>
+
+
+
+   </LinearLayout>
+
+        </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+        </ScrollView>
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/buttonsLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="200dp"
+
+    <!--        <TextView-->
+    <!--            android:id="@+id/followingTvshows"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_marginTop="150dp"-->
+    <!--            android:text=""-->
+    <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--            app:layout_constraintLeft_toLeftOf="parent"-->
+    <!--            app:layout_constraintRight_toRightOf="parent"-->
+    <!--            app:layout_constraintTop_toTopOf="parent"-->
+    <!--            android:visibility="gone"/>-->
 
 
 
 
-        ></LinearLayout>
 
 
 
 
-</RelativeLayout>
+
+
+
+</LinearLayout>

@@ -83,10 +83,10 @@ public class CalendarActivity extends AppCompatActivity implements EasyPermissio
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
 
-        final String movieTitle = getIntent().getStringExtra("title");
-       // final String movieDate = getIntent().getStringExtra("date");
-        final String movieDate = "2019-12-10";
-
+        final String movieTitle = getIntent().getStringExtra("MovieTitle");
+        final String movieDate = getIntent().getStringExtra("MovieDate");
+        final String tvshowTitle = getIntent().getStringExtra("TvShowTitle");
+        final String tvshowDate = getIntent().getStringExtra("TvShowDate");
         final String userEmail = getIntent().getStringExtra("email");
 
         System.out.println("xxxxxxx"+movieTitle);
@@ -126,8 +126,15 @@ public class CalendarActivity extends AppCompatActivity implements EasyPermissio
         scheduleMeeting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EventDialog eventDialog = new EventDialog(movieDate,movieTitle,userEmail);
-                eventDialog.show(getFragmentManager(), "dialog");
+
+                if(movieDate==null) {
+                    EventDialog eventDialog = new EventDialog(tvshowDate, tvshowTitle, userEmail);
+                    eventDialog.show(getFragmentManager(), "dialog");
+                }
+                else{
+                    EventDialog eventDialog = new EventDialog(movieDate, movieTitle, userEmail);
+                    eventDialog.show(getFragmentManager(), "dialog");
+                }
 
                /* Dialog dialog=new Dialog(CalendarActivity.this,android.R.style.Theme_Black_NoTitleBar_Fullscreen);
                 dialog.setContentView(R.layout.create_event_layout);

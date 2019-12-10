@@ -46,7 +46,6 @@ class TMDBRecyclerViewAdapter extends RecyclerView.Adapter<TMDBRecyclerViewAdapt
     private FirebaseAuth.AuthStateListener mAuthListener;
     private DatabaseReference myRef;
     private List<String> followingMovies;
-    private DatabaseAccess dba = new DatabaseAccess();
     private ArrayList<Movie> movieArrayList;
 
 
@@ -82,25 +81,9 @@ class TMDBRecyclerViewAdapter extends RecyclerView.Adapter<TMDBRecyclerViewAdapt
 
         holder.title.setText(movieItem.getTitle());
         holder.overview.setText(movieItem.getOverview());
-/*
-        holder.moviePoster.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(mContext, "You Clicked the poster", Toast.LENGTH_LONG).show();
-            }
-        });
 
 
-        holder.newMoviesLinearLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                Toast.makeText(mContext, "You Clicked the layout ", Toast.LENGTH_LONG).show();
-            }
-        });
-
-
-*/
         holder.followBtn.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -122,9 +105,6 @@ class TMDBRecyclerViewAdapter extends RecyclerView.Adapter<TMDBRecyclerViewAdapt
         notifyDataSetChanged();
     }
 
-//    public Movie getMovieIntoPosition{
-//        return ((mMoviesList != null) && (mMoviesList.size() != 0) ? mMoviesList.get(position) : null);
-//    }
 
     static class TMDBMovieHolder extends RecyclerView.ViewHolder {
 
@@ -138,7 +118,6 @@ class TMDBRecyclerViewAdapter extends RecyclerView.Adapter<TMDBRecyclerViewAdapt
         Button followBtn;
 
 
-        //TextView overview = null;
 
         public TMDBMovieHolder(@NonNull View itemView) {
             super(itemView);

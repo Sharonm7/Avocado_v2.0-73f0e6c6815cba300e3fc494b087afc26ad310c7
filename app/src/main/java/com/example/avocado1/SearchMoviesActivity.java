@@ -28,17 +28,14 @@ import java.util.List;
 
 
 
-public class MovieDetailActivity extends AppCompatActivity
+public class SearchMoviesActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, GetTMDBJsonData.OnDataReady {
     private static final String TAG = "ViewDatabase";
 
     private TMDBRecyclerViewAdapter mTMDBRecyclerViewAdapter;
-    //List<?> list= new ArrayList<>();
 
 
-    private static final String baseURL ="https://api.themoviedb.org/3/movie/upcoming?api_key=5ba2372e5f26794510a9b0987dddf17b&language=he-IL&page=1";
-
-  //  private static final String baseURL ="https://api.themoviedb.org/3/discover/movie?api_key=5ba2372e5f26794510a9b0987dddf17b&language=he-IL&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&year=2019";
+    private static final String baseURL ="https://api.themoviedb.org/3/search/movie?api_key=5ba2372e5f26794510a9b0987dddf17b&language=he-IL&page=1&include_adult=false";
     //private static final String baseURI ="https://api.themoviedb.org/3";
     //private static final String SearchURI ="https://api.themoviedb.org/3/search/movie?query=man in black&api_key=5ba2372e5f26794510a9b0987dddf17b&language=he-IL";
     //private static final String GenresListURI ="https://api.themoviedb.org/3/genre/movie/list?api_key=5ba2372e5f26794510a9b0987dddf17b&language=he-il";
@@ -48,7 +45,7 @@ public class MovieDetailActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_movie_detail);
+        setContentView(R.layout.activity_search_movies);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 

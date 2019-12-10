@@ -82,11 +82,14 @@ class GetTMDBTVJsonData extends AsyncTask<String, Void, List<TvShow>> implements
 
         if(downloadStatus == DownloadStatus.OK){
             tvShowList = new ArrayList<>();
+            ArrayList <Integer> genres= new ArrayList<Integer>();
             try{
                 JSONObject jData = new JSONObject(data);
                 JSONArray resultsArray = jData.getJSONArray("results");
 
                 for(int i=0; i<resultsArray.length(); i++){
+                    genres.clear();
+
 
                     JSONObject jMovie = resultsArray.getJSONObject(i);
                     String title = jMovie.getString("name");
@@ -99,11 +102,22 @@ class GetTMDBTVJsonData extends AsyncTask<String, Void, List<TvShow>> implements
                     double popularity = jMovie.getDouble("popularity");
 
 
+
+                    JSONObject genn = resultsArray.getJSONObject(i);
+                    JSONArray genreIdArray = genn.getJSONArray("genre_ids");
+
+
+                    for(int j=0; j<genreIdArray.length(); j++){
+                        genres.add(genreIdArray.getInt(j));
+
+                    }
+
+
                     String posterLink = poster.replace("/", "https://image.tmdb.org/t/p/w92/");
                     // Example of Lion King poster request ==>  https://image.tmdb.org/t/p/original/fILTFOc4uV1mYL0qkoc3LyG1Jo9.jpg
                     // Discover size poster request ==>  https://image.tmdb.org/t/p/w92/fILTFOc4uV1mYL0qkoc3LyG1Jo9.jpg
 
-                    TvShow tvShow = new TvShow(id, Double.parseDouble(vote_avg), title ,popularity, posterLink, overview, release_date );
+                    TvShow tvShow = new TvShow(id, Double.parseDouble(vote_avg), title ,popularity, posterLink, overview, release_date, genres);
                     tvShowList.add(tvShow);
 
                     Log.d(TAG, "onDownloadComplete: " + tvShow.toString());

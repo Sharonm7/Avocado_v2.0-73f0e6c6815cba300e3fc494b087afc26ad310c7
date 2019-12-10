@@ -1,5 +1,7 @@
 package com.example.avocado1;
 
+import java.util.ArrayList;
+
 public class TvShow {
 
     private String id;
@@ -10,12 +12,14 @@ public class TvShow {
     private String poster_path;
     private String overview;
     private String release_date;
+    private ArrayList<Integer> genre_ids;
+
 
 
     public TvShow() {
     }
 
-    TvShow(String id, double vote_average, String title, double popularity, String poster_path, String overview, String release_date) {
+    TvShow(String id, double vote_average, String title, double popularity, String poster_path, String overview, String release_date, ArrayList genre_ids) {
 
         this.id = id;
         this.vote_average = vote_average;
@@ -24,6 +28,7 @@ public class TvShow {
         this.poster_path = poster_path;
         this.overview = overview;
         this.release_date = release_date;
+        this.genre_ids= genre_ids;
     }
 
 
@@ -84,6 +89,13 @@ public class TvShow {
         this.release_date = release_date;
     }
 
+    public ArrayList<Integer> getGenre_ids() {
+        return genre_ids;
+    }
+
+    public void setGenre_ids(ArrayList<Integer> genre_ids) {
+        this.genre_ids = genre_ids;
+    }
 
     @Override
     public String toString() {
@@ -95,6 +107,8 @@ public class TvShow {
                 ", poster_path='" + poster_path + '\'' +
                 ", overview='" + overview + '\'' +
                 ", release_date='" + release_date + '\'' +
+                ", genre_ids='" + genre_ids + '\'' +
+
                 '}';
     }
 

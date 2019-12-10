@@ -54,6 +54,8 @@ public class RegisterPage extends AppCompatActivity {
         TvShow tv= new TvShow();
         ArrayList<String> Preferences = new ArrayList<>();
         Preferences.add("");
+        ArrayList<Integer> genreId= new ArrayList<>();
+        genreId.add(0);
         ArrayList<Movie> followingMovies = new ArrayList<>();
         ArrayList<TvShow> followingTvShows = new ArrayList<>();
         followingMovies.add(m);
@@ -81,7 +83,7 @@ public class RegisterPage extends AppCompatActivity {
 
 
 
-        User user = new User(id, Email, Password, UserName, Preferences,followingMovies,followingTvShows);
+        User user = new User(id, Email, Password, UserName, Preferences,followingMovies,followingTvShows, genreId);
 
 
         userRef.child(UserName);
@@ -89,6 +91,8 @@ public class RegisterPage extends AppCompatActivity {
         userRef.child(UserName).child("preferences").setValue(Preferences);
         userRef.child(UserName).child("followingMovies").setValue(followingMovies);
         userRef.child(UserName).child("followingTvShows").setValue(followingTvShows);
+        userRef.child(UserName).child("genreIDs").setValue(genreId);
+
 
         progressBar.setVisibility(View.GONE);
         Toast.makeText(RegisterPage.this, "user added to db", Toast.LENGTH_LONG).show();

@@ -1,24 +1,12 @@
 package com.example.avocado1;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.navigation.Navigation;
 
 import android.content.Intent;
 
-import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.avocado1.DatabaseAccess;
-
-
-import android.graphics.Color;
-import android.graphics.LightingColorFilter;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -29,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,18 +30,16 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map.Entry;
 
 
 public class HomePage extends AppCompatActivity
@@ -69,7 +54,8 @@ public class HomePage extends AppCompatActivity
     private TextView emailNav;
     private FirebaseDatabase mFirebaseDatabase;
     private FirebaseAuth.AuthStateListener mAuthListener;
-    private DatabaseReference myRef;
+    private DatabaseReference moviesRef;
+    private DatabaseReference TvShowsRef;
     private List<String> genresList = new ArrayList<>();
     private Button buttons[] = new Button[5];
     TextView textViewDisplayName;
@@ -101,12 +87,14 @@ public class HomePage extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
 
+
+
+
         mAuth = FirebaseAuth.getInstance();
         final FirebaseUser user = mAuth.getCurrentUser();
         textViewDisplayName = (TextView) findViewById(R.id.helloUser);
         textViewDisplayGenres = (TextView) findViewById(R.id.genres);
-        textViewDisplayFollowingMovies = (TextView) findViewById(R.id.followingMovies);
-        textViewDisplayFollowingTvshows = (TextView) findViewById(R.id.followingTvshows);
+        //textViewDisplayFollowingTvshows = (TextView) findViewById(R.id.followingTvshows);
         imageViewDisplayMoviePoster= (ImageView) findViewById(R.id.moviePoster);
 
 
@@ -116,10 +104,10 @@ public class HomePage extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         loadUserInformation();
-        updateGenres(genresList);
+       updateGenres(genresList);
          DisplayGenres(buttons);
-        // DisplayFollowing();
-        setOnUserListener();
+        setOnMoviesListener();
+        setOnTvShowsListener();
 
 
 
@@ -147,10 +135,10 @@ public class HomePage extends AppCompatActivity
 
         private void updateGenres(final List<String> genres) {
 
-        myRef = FirebaseDatabase.getInstance().getReference("Users");
+        moviesRef = FirebaseDatabase.getInstance().getReference("Users");
         final String userName = mAuth.getCurrentUser().getDisplayName();
 
-            myRef.child(userName).addValueEventListener(new ValueEventListener() {
+            moviesRef.child(userName).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -171,63 +159,13 @@ public class HomePage extends AppCompatActivity
 
             });
     }
-//    private void displayFollowingMovies () {
-//
-//        Map<String, HashMap<String,Movie>> movieMap = this.user.getFollowingMovies();
-//
-//
-//        Iterator<Map.Entry<String, HashMap<String,Movie>>> it = movieMap.entrySet().iterator();
-//        Movie movie= new Movie();
-//
-//
-//        while (it.hasNext()) {
-//
-//            Map<String, Movie> map = it.next().getValue();
-//            Iterator<Map.Entry<String,Movie>> it1 = map.entrySet().iterator();
-//            ArrayList<Movie> movieArrayList = new ArrayList<>();
-//            while(it1.hasNext()){
-//                Entry<String, Movie> entry = it1.next();
-//
-//                switch(entry.getKey()) {
-//
-//                    case ("title"):
-//                       movie.setTitle(entry.getValue());
-//                        Log.d("Title:","" + it1.next().getKey() + "value:" + movie.getTitle());
-//                        break;
-//
-//                    case ("popularity"):
-//                        movie.setPopularity(entry.get);
-//
-//                        break;
-//
-//
-//                    case ("overview"):
-//                        break;
-//
-//
-//                    case ("poster"):
-//                        break;
-//
-//
-//                }
-//
-//                Log.d("movieAdded:","" + it1.next().getKey() + "value:" + it1.next().getValue());
-//                Log.d("Title:","" + it1.next().getKey() + "value:" + movie.getTitle());
-//            }
-//
-//
-//
-//
-//            //   textViewDisplayFollowingMovies.setText(this.user.getFollowingMovies().toString());
-//        }
-//    }
 
     private void DisplayGenres(final Button buttons[]) {
-        myRef = FirebaseDatabase.getInstance().getReference("Users");
+        moviesRef = FirebaseDatabase.getInstance().getReference("Users");
         final String userName = mAuth.getCurrentUser().getDisplayName();
 
 
-        myRef.child(userName).addValueEventListener(new ValueEventListener() {
+        moviesRef.child(userName).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -303,53 +241,60 @@ public class HomePage extends AppCompatActivity
 
     }
 
+    private void setOnTvShowsListener(){
 
-    private void setOnUserListener() {
-//
-
-
-            mAuth = FirebaseAuth.getInstance();
-            myRef = FirebaseDatabase.getInstance().getReference("Users").child(mAuth.getCurrentUser().getDisplayName()).child("followingMovies");
-//        final String userName = mAuth.getCurrentUser().getDisplayName();
+        mAuth = FirebaseAuth.getInstance();
+        TvShowsRef = FirebaseDatabase.getInstance().getReference("Users").child(mAuth.getCurrentUser().getDisplayName()).child("followingTvShows");
 
 
-        myRef.addValueEventListener(new ValueEventListener() {
+        TvShowsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Map<String, Object> td = (HashMap<String,Object>) dataSnapshot.getValue();
-//                List<Object> values = (List<Object>) td.values();
 
 
-                ArrayList<Movie> movieArrayList = new ArrayList<>();
-                Iterator it = td.entrySet().iterator();
+                final ArrayList<TvShow> tvShowArrayList = new ArrayList<>();
+                if (td.entrySet() != null) {
 
-                while (it.hasNext()) {
 
-                    Map.Entry pair = (Map.Entry)it.next();
+                    Iterator it = td.entrySet().iterator();
 
-                    System.out.println(pair.getKey() + " = " + pair.getValue());
-                    DatabaseReference movieRef = myRef.child((String) pair.getKey());
+                    while (it.hasNext()) {
 
-                    movieRef.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            Movie movie = dataSnapshot.getValue(Movie.class);
+                        Map.Entry pair = (Map.Entry) it.next();
 
-                            System.out.println(movie.toString());
-                            System.out.println(movie.getTitle());
-                            dispalyFollowing(movie);
-                        }
+                        System.out.println(pair.getKey() + " = " + pair.getValue());
+                        DatabaseReference TvShowRef = TvShowsRef.child((String) pair.getKey());
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                        TvShowRef.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                TvShow tvShow = dataSnapshot.getValue(TvShow.class);
+                                if (tvShow != null) {
 
-                        }
-                    });
+                                    tvShowArrayList.add(tvShow);
+
+                                    System.out.println("tvArray:" + tvShowArrayList.toString());
+
+                                    System.out.println(tvShow.toString());
+                                    System.out.println(tvShow.getTitle());
+                                    dispalyFollowingTvShows(tvShow);
+                                }
+
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+
+
+                        });
+
+                    }
 
                 }
-
-
-//                createUser();
             }
 
             @Override
@@ -358,25 +303,121 @@ public class HomePage extends AppCompatActivity
         });
     }
 
-    private void dispalyFollowing(final Movie movie){
-        textViewDisplayFollowingMovies.setText(movie.getTitle());
 
-        Picasso.get().load("http://image.tmdb.org/t/p/w185/"+movie.getPoster_path()).into(imageViewDisplayMoviePoster);
-        imageViewDisplayMoviePoster.setOnClickListener(new View.OnClickListener() {
+
+
+
+    private void setOnMoviesListener() {
+
+            mAuth = FirebaseAuth.getInstance();
+            moviesRef = FirebaseDatabase.getInstance().getReference("Users").child(mAuth.getCurrentUser().getDisplayName()).child("followingMovies");
+//        final String userName = mAuth.getCurrentUser().getDisplayName();
+
+
+        moviesRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                Map<String, Object> td = (HashMap<String, Object>) dataSnapshot.getValue();
+//                List<Object> values = (List<Object>) td.values();
+                final ArrayList<Movie> movieArrayList = new ArrayList<>();
+               if (td.entrySet() != null) {
+
+
+                Iterator it = td.entrySet().iterator();
+
+                while (it.hasNext()) {
+
+                    Map.Entry pair = (Map.Entry) it.next();
+
+                    System.out.println(pair.getKey() + " = " + pair.getValue());
+                    DatabaseReference movieRef = moviesRef.child((String) pair.getKey());
+
+                    movieRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            Movie movie = dataSnapshot.getValue(Movie.class);
+                            if (movie != null) {
+
+                                movieArrayList.add(movie);
+
+                                System.out.println("movieArray:" + movieArrayList.toString());
+
+                                System.out.println(movie.toString());
+                                System.out.println(movie.getTitle());
+                                dispalyFollowingMovies(movie);
+
+
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+
+
+                    });
+
+                }
+
+
+            }
+
+       }
+
+
+                @Override
+                public void onCancelled (DatabaseError databaseError){
+                }
+
+        });
+    }
+
+    private void dispalyFollowingMovies(final Movie movie){
+
+
+        LinearLayout linearLayout = findViewById(R.id.followingMoviesLayout);
+//            createMovieContainer();
+            TextView textViewDisplayMovies= new TextView(this);
+            textViewDisplayMovies.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+            textViewDisplayMovies.setText(movie.getTitle());
+
+            linearLayout.addView(textViewDisplayMovies);
+
+           ImageView imageViewDisplayMoviesPoster= new ImageView(this);
+        imageViewDisplayMoviesPoster.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+        Picasso.get().load(movie.getPoster_path()).into(imageViewDisplayMoviesPoster);
+        linearLayout.addView(imageViewDisplayMoviesPoster);
+
+        Button followBtn= new Button(this);
+        followBtn.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+        followBtn.setText("הסר");
+        linearLayout.addView(followBtn);
+
+        followBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DeleteFollowingMovie(movie);
+
+            }
+        });
+
+
+
+
+
+      imageViewDisplayMoviesPoster.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 final FirebaseUser fbUser = mAuth.getCurrentUser();
-
                 Intent intent = new Intent(HomePage.this, CalendarActivity.class);
                 //intent.putExtra("moviedetails", new String[]{movie.getTitle(),movie.getRelease_date()
 
-                intent.putExtra("title", movie.getTitle());
-                intent.putExtra("date",movie.getRelease_date() );
+                intent.putExtra("MovieTitle", movie.getTitle());
+                intent.putExtra("MovieDate",movie.getRelease_date() );
                 intent.putExtra("email",fbUser.getEmail() );
-
-
-
                 startActivity(intent);
 
             }
@@ -386,28 +427,138 @@ public class HomePage extends AppCompatActivity
 
     }
 
-    private void createUser() {
-        if (user == null) {
-            this.user = new User();
+    private void dispalyFollowingTvShows(final TvShow tvShow) {
 
-        }
-        this.user.setEmail((String) userMap.get("email"));
-        if (userMap.get("followingMovies") != null)
-            this.user.setFollowingMovies((List<Movie>) userMap.get("followingMovies"));
+        LinearLayout linearLayout = findViewById(R.id.followingTvShowsLayout);
+//            createMovieContainer();
+        TextView textViewDisplayTvShows= new TextView(this);
+        textViewDisplayTvShows.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+        textViewDisplayTvShows.setText(tvShow.getTitle());
 
-        if (userMap.get("followingTvShows") != null)
-            this.user.setFollowingTvShows((ArrayList<TvShow>) userMap.get("followingTvShows"));
-        this.user.setId((String) userMap.get("id"));
-        this.user.setUsername((String) userMap.get("userName"));
-        if (userMap.get("preferences") != null)
-            this.user.setPreferences((ArrayList<String>) userMap.get("preferences"));
-        this.user.setPassword((String) userMap.get("password"));
+        linearLayout.addView(textViewDisplayTvShows);
+
+        ImageView imageViewDisplayTvShowsPoster= new ImageView(this);
+        imageViewDisplayTvShowsPoster.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+        Picasso.get().load(tvShow.getPoster_path()).into(imageViewDisplayTvShowsPoster);
+        linearLayout.addView(imageViewDisplayTvShowsPoster);
 
 
-        //  displayFollowingMovies();
+        Button followBtn= new Button(this);
+        followBtn.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+        followBtn.setText("הסר");
+        linearLayout.addView(followBtn);
+
+        followBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DeleteFollowingTvShow(tvShow);
+
+            }
+        });
+
+        imageViewDisplayTvShowsPoster.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                final FirebaseUser fbUser = mAuth.getCurrentUser();
+                Intent intent = new Intent(HomePage.this, CalendarActivity.class);
+                //intent.putExtra("moviedetails", new String[]{movie.getTitle(),movie.getRelease_date()
+
+                intent.putExtra("TvShowTitle", tvShow.getTitle());
+                intent.putExtra("TvShowDate",tvShow.getRelease_date() );
+                intent.putExtra("email",fbUser.getEmail() );
+                startActivity(intent);
+
+            }
+        });
+
+
 
 
     }
+
+
+    public void DeleteFollowingMovie(Movie movie){
+
+        mAuth = FirebaseAuth.getInstance();
+        String Title= movie.getTitle();
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+        Query query = ref.child("Users").child(mAuth.getCurrentUser().getDisplayName()).child("followingMovies").orderByChild("title").equalTo(Title);
+
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                    snapshot.getRef().removeValue();
+                    finish();
+                    startActivity(getIntent());
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e(TAG, "onCancelled", databaseError.toException());
+            }
+        });
+
+
+    }
+
+
+
+
+    public void DeleteFollowingTvShow(TvShow tvShow){
+
+        mAuth = FirebaseAuth.getInstance();
+        String Title= tvShow.getTitle();
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+        Query query = ref.child("Users").child(mAuth.getCurrentUser().getDisplayName()).child("followingTvShows").orderByChild("title").equalTo(Title);
+
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                    snapshot.getRef().removeValue();
+                    finish();
+                    startActivity(getIntent());
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e(TAG, "onCancelled", databaseError.toException());
+            }
+        });
+
+
+    }
+
+
+
+//    private void createUser() {
+//        if (user == null) {
+//            this.user = new User();
+//
+//        }
+//        this.user.setEmail((String) userMap.get("email"));
+//        if (userMap.get("followingMovies") != null)
+//            this.user.setFollowingMovies((List<Movie>) userMap.get("followingMovies"));
+//
+//        if (userMap.get("followingTvShows") != null)
+//            this.user.setFollowingTvShows((ArrayList<TvShow>) userMap.get("followingTvShows"));
+//        this.user.setId((String) userMap.get("id"));
+//        this.user.setUsername((String) userMap.get("userName"));
+//        if (userMap.get("preferences") != null)
+//            this.user.setPreferences((ArrayList<String>) userMap.get("preferences"));
+//        this.user.setPassword((String) userMap.get("password"));
+//
+//
+//        //  displayFollowingMovies();
+//
+//
+//    }
 
 
 
@@ -463,6 +614,16 @@ public class HomePage extends AppCompatActivity
             case R.id.action_tvShowsId:
                 Intent TvShowsIntent = new Intent(this, TvShowDetailActivity.class);
                 startActivity(TvShowsIntent);
+                return true;
+
+            case R.id.search_movies:
+                Intent searchMoviesIntent = new Intent(this, SearchMoviesActivity.class);
+                startActivity(searchMoviesIntent);
+                return true;
+
+            case R.id.action_recommended:
+                Intent recommendedMoviesIntent = new Intent(this, RecommendedMovies.class);
+                startActivity(recommendedMoviesIntent);
                 return true;
 
             case R.id.action_calendar:

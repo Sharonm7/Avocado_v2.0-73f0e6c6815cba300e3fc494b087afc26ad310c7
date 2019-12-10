@@ -28,8 +28,8 @@ import java.util.List;
 
 
 
-public class MovieDetailActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, GetTMDBJsonData.OnDataReady {
+public class RecommendedMovies extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener, GetJSONDataByGenre.OnDataReady {
     private static final String TAG = "ViewDatabase";
 
     private TMDBRecyclerViewAdapter mTMDBRecyclerViewAdapter;
@@ -38,7 +38,7 @@ public class MovieDetailActivity extends AppCompatActivity
 
     private static final String baseURL ="https://api.themoviedb.org/3/movie/upcoming?api_key=5ba2372e5f26794510a9b0987dddf17b&language=he-IL&page=1";
 
-  //  private static final String baseURL ="https://api.themoviedb.org/3/discover/movie?api_key=5ba2372e5f26794510a9b0987dddf17b&language=he-IL&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&year=2019";
+    //  private static final String baseURL ="https://api.themoviedb.org/3/discover/movie?api_key=5ba2372e5f26794510a9b0987dddf17b&language=he-IL&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&year=2019";
     //private static final String baseURI ="https://api.themoviedb.org/3";
     //private static final String SearchURI ="https://api.themoviedb.org/3/search/movie?query=man in black&api_key=5ba2372e5f26794510a9b0987dddf17b&language=he-IL";
     //private static final String GenresListURI ="https://api.themoviedb.org/3/genre/movie/list?api_key=5ba2372e5f26794510a9b0987dddf17b&language=he-il";
@@ -142,7 +142,7 @@ public class MovieDetailActivity extends AppCompatActivity
     protected  void onResume(){
         Log.d(TAG, "onResume: starts");
         super.onResume();
-        GetTMDBJsonData gTMDBdata = new GetTMDBJsonData(this,baseURL, language);
+        GetJSONDataByGenre gTMDBdata = new GetJSONDataByGenre(this,baseURL, language);
         //   gTMDBdata.excuteOnSameThread("");
         gTMDBdata.execute();
         Log.d(TAG, "onResume: ends");

@@ -13,10 +13,11 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:largeHeap="true"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".FavoriteMovies"></activity>
+        <activity android:name=".RecommendedMovies"></activity>
+        <activity android:name=".SearchMoviesActivity" />
+        <activity android:name=".FavoriteMovies" />
         <activity android:name=".TvShowDetailActivity" />
 
         <meta-data
@@ -31,6 +32,7 @@
         <activity android:name=".EventDialog" />
         <activity android:name=".CalendarActivity" />
         <activity android:name=".MovieDetailActivity" />
+
         <activity
             android:name=".ProfilePage"
             android:parentActivityName=".HomePage">

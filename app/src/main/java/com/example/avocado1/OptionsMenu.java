@@ -71,6 +71,11 @@ public class OptionsMenu extends AppCompatActivity
                 startActivity(HomeIntent);
                 return true;
 
+            case R.id.action_recommended:
+                Intent RecommendedIntent = new Intent(this, RecommendedMovies.class);
+                startActivity(RecommendedIntent);
+                return true;
+
 
 
             case R.id.action_accountId:

@@ -20,7 +20,7 @@
 
             android:background="#3397D4"
             android:textColor="#fff"
-            android:src="@drawable/back"
+            android:src="@mipmap/ic_home"
             android:scaleType="fitStart"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="5dp"

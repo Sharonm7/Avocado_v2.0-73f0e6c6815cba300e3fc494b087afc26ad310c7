@@ -51,6 +51,15 @@
         app:showAsAction="never"/>
 
     <item
+        android:id="@+id/search_movies"
+        android:title="חיפוש סרטים"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_recommended"
+        android:title="סרטים מומלצים עבורך"
+        app:showAsAction="never"/>
+
+    <item
         android:id="@+id/action_calendar"
         android:title="לוח שנה"
         app:showAsAction="never"/>
