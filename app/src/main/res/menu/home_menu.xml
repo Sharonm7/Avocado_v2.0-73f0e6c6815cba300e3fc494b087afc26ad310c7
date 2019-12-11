@@ -58,6 +58,10 @@
         android:id="@+id/action_recommended"
         android:title="סרטים מומלצים עבורך"
         app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_recommendedTv"
+        android:title="סדרות מומלצות עבורך"
+        app:showAsAction="never"/>
 
     <item
         android:id="@+id/action_calendar"

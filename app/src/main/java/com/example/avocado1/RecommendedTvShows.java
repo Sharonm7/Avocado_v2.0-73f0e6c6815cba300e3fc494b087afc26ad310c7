@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -35,17 +36,18 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 
-public class RecommendedMovies extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, GetJSONDataByGenre.OnDataReady {
+public class RecommendedTvShows extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener, GetJSONDataByGenreTv.OnDataReadyTv {
     private static final String TAG = "ViewDatabase";
     private FirebaseAuth mAuth;
     private DatabaseReference moviesRef;
+    private TextView textViewEmptyListError;
 
-    private TMDBRecyclerViewAdapter mTMDBRecyclerViewAdapter;
+    private TMDBTVRecyclerViewAdapter mTMDBTVRecyclerViewAdapter;
     //List<?> list= new ArrayList<>();
 
 
-    private static final String baseURL ="https://api.themoviedb.org/3/movie/upcoming?api_key=5ba2372e5f26794510a9b0987dddf17b&language=he-IL&page=1";
+    private static final String baseURL ="https://api.themoviedb.org/3/tv/popular?api_key=5ba2372e5f26794510a9b0987dddf17b&language=he-IL&page=1";
 
     //  private static final String baseURL ="https://api.themoviedb.org/3/discover/movie?api_key=5ba2372e5f26794510a9b0987dddf17b&language=he-IL&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&year=2019";
     //private static final String baseURI ="https://api.themoviedb.org/3";
@@ -63,8 +65,9 @@ public class RecommendedMovies extends AppCompatActivity
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler2);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mTMDBRecyclerViewAdapter = new TMDBRecyclerViewAdapter(this, new ArrayList<Movie>());
-        recyclerView.setAdapter(mTMDBRecyclerViewAdapter);
+        mTMDBTVRecyclerViewAdapter = new TMDBTVRecyclerViewAdapter(this, new ArrayList<TvShow>());
+        recyclerView.setAdapter(mTMDBTVRecyclerViewAdapter);
+        textViewEmptyListError= findViewById(R.id.emptyList);
 
     }
 
@@ -151,7 +154,7 @@ public class RecommendedMovies extends AppCompatActivity
     protected  void onResume(){
         Log.d(TAG, "onResume: starts");
         super.onResume();
-        GetJSONDataByGenre gTMDBdata = new GetJSONDataByGenre(this,baseURL, language);
+        GetJSONDataByGenreTv gTMDBdata = new GetJSONDataByGenreTv(this,baseURL, language);
         //   gTMDBdata.excuteOnSameThread("");
         gTMDBdata.execute();
         Log.d(TAG, "onResume: ends");
@@ -160,7 +163,7 @@ public class RecommendedMovies extends AppCompatActivity
 
 
     @Override
-    public void onDataReady(List list, DownloadStatus status){
+    public void onDataReadyTv(List list, DownloadStatus status){
         Log.d(TAG, "onDataReady: starts");
 
 
@@ -170,7 +173,7 @@ public class RecommendedMovies extends AppCompatActivity
 
         }
         else {
-            Log.e(TAG, "onDataReady failed with status " + status );
+            Log.e(TAG, "onDataReadyTv failed with status " + status );
         }
         Log.d(TAG, "onDataReady: ends");
     }
@@ -179,90 +182,92 @@ public class RecommendedMovies extends AppCompatActivity
 
 
 
-            mAuth = FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
 
-            moviesRef = FirebaseDatabase.getInstance().getReference("Users");
-            final String userName = mAuth.getCurrentUser().getDisplayName();
-
-
-
-            moviesRef.child(userName).child("genresId").addValueEventListener(new ValueEventListener() {
-                @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    ArrayList<Integer> genresIdArray;
-                    ArrayList<Movie> filteredMovie= new ArrayList<>();
-                    genresIdArray = ((ArrayList<Integer>)dataSnapshot.getValue());
-
-                    //iterate on each movie
-                    for( int i = 0; i < list.size() ; i++ ){
-
-                        Movie movieFromList = (Movie) list.get(i);
-                        //get his genere
-                        ArrayList<Integer> generesFromList = movieFromList.getGenre_ids();
-                        System.out.println("genresFromList" + generesFromList);
-                        System.out.println("genresIdArray" + genresIdArray);
+        moviesRef = FirebaseDatabase.getInstance().getReference("Users");
+        final String userName = mAuth.getCurrentUser().getDisplayName();
 
 
 
+        moviesRef.child(userName).child("genresId").addValueEventListener(new ValueEventListener() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                ArrayList<Integer> genresIdArray;
+                ArrayList<TvShow> filteredShows= new ArrayList<>();
+                genresIdArray = ((ArrayList<Integer>)dataSnapshot.getValue());
 
-                        // if genere is in Genere Array add to new list
-                        for (int j = 0 ; j < generesFromList.size() ; j ++){
-                            for(int k=0; k<genresIdArray.size();k++){
-                                System.out.println("generesFromList-j: " + generesFromList.get(j));
-                                System.out.println("genresIdArray-k: " + genresIdArray.get(k));
+                //iterate on each movie
+                for( int i = 0; i < list.size() ; i++ ){
 
-
-
-                                String a = String.valueOf(generesFromList.get(j));
-                                String b = String.valueOf(genresIdArray.get(k));
-
-                                System.out.println(a==b);
-
-                                if(a.equals(b)){
-
-                                    filteredMovie.add(movieFromList);
-                                    System.out.println("movieFromListINNN" + movieFromList);
-                                    System.out.println("filteredMovieINNN" + filteredMovie);
-                                    System.out.println("filteredMovieSIZE" + filteredMovie.size());
+                    TvShow tvShowFromList = (TvShow) list.get(i);
+                    //get his genere
+                    ArrayList<Integer> generesFromList = tvShowFromList.getGenre_ids();
+                    System.out.println("genresFromList" + generesFromList);
+                    System.out.println("genresIdArray" + genresIdArray);
 
 
-                                }
-                                break;
+
+
+                    // if genere is in Genere Array add to new list
+                    for (int j = 0 ; j < generesFromList.size() ; j ++){
+                        for(int k=0; k<genresIdArray.size();k++){
+                            System.out.println("generesFromList-j: " + generesFromList.get(j));
+                            System.out.println("genresIdArray-k: " + genresIdArray.get(k));
+
+
+
+                            String a = String.valueOf(generesFromList.get(j));
+                            String b = String.valueOf(genresIdArray.get(k));
+
+                            System.out.println(a==b);
+
+                            if(a.equals(b)){
+
+                                filteredShows.add(tvShowFromList);
+                                System.out.println("TvShowFromListINNN" + tvShowFromList);
+                                System.out.println("filteredShowINNN" + filteredShows);
+                                System.out.println("filteredShowSIZE" + filteredShows.size());
+
+
                             }
+                            break;
+                        }
 //                            if(genresIdArray.contains(generesFromList.get(j)));
 //                                filteredMovie.add(movieFromList);
 //                                continue;
-                            System.out.println("filteredMovie" + filteredMovie);
-                            break;
+                        System.out.println("filteredshows" + filteredShows);
+                        break;
 
-
-
-
-
-                        }
-                       // System.out.println("filteredMovie" + filteredMovie);
 
 
 
 
                     }
+                    // System.out.println("filteredMovie" + filteredMovie);
 
-                    //display new list
-                    mTMDBRecyclerViewAdapter.loadNewData(filteredMovie);
-                    // genresIdArray = ((ArrayList<Integer>) dataSnapshot.getValue());
+
+
 
                 }
 
+                //display new list
+                if(filteredShows.isEmpty())
+                    Toast.makeText(RecommendedTvShows.this, "אין תכן להציג על פי הז'אנרים הנבחרים", Toast.LENGTH_LONG).show();
+                mTMDBTVRecyclerViewAdapter.loadNewData(filteredShows);
+                // genresIdArray = ((ArrayList<Integer>) dataSnapshot.getValue());
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
+            }
 
 
-            });
-        }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+
+
+        });
+    }
 
 }
 

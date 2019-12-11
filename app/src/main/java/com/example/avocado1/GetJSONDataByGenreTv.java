@@ -29,27 +29,26 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-class GetJSONDataByGenre extends AsyncTask<String, Void, List<Movie>> implements GetRawData.OnDownloadComplete {
+class GetJSONDataByGenreTv extends AsyncTask<String, Void, List<TvShow>> implements GetRawData.OnDownloadComplete {
 
-    private static final String TAG = "GetJSONDataByGenre";
-    private List<Movie> movieList = null;
+    private static final String TAG = "GetJSONDataByGenreTv";
+    private List<TvShow> tvShowList = null;
     private String baseUrl;
     private String language;
 
-    private final OnDataReady callBack;
+    private final OnDataReadyTv callBack;
     // private final OnDataReadyTv callBacktv;
     private boolean runningOnSameThread = false;
 
     final private List<String> genresIdArray = new ArrayList<String>();
 
-
-    interface OnDataReady {
-        void onDataReady(List data, DownloadStatus status);
+    interface OnDataReadyTv{
+        void onDataReadyTv(List<TvShow> data, DownloadStatus status);
     }
 
 
-    public GetJSONDataByGenre(OnDataReady callBack, String baseUrl, String language) {
-        Log.d(TAG, "GetJSONDataByGenre: called");
+    public GetJSONDataByGenreTv(OnDataReadyTv callBack, String baseUrl, String language) {
+        Log.d(TAG, "GetJSONDataByGenreTv: called");
         this.baseUrl = baseUrl;
         this.language = language;
         this.callBack = callBack;
@@ -69,16 +68,16 @@ class GetJSONDataByGenre extends AsyncTask<String, Void, List<Movie>> implements
     }
 
     @Override
-    protected void onPostExecute(List<Movie> movies) {
+    protected void onPostExecute(List<TvShow> tvShows) {
         Log.d(TAG, "onPostExecute: starts");
-        if (callBack != null) {
-            callBack.onDataReady(movieList, DownloadStatus.OK);
+        if(callBack != null){
+            callBack.onDataReadyTv(tvShowList, DownloadStatus.OK);
         }
         Log.d(TAG, "onPostExecute: ends");
     }
 
     @Override
-    protected List<Movie> doInBackground(String... params) {
+    protected List<TvShow> doInBackground(String... params) {
         Log.d(TAG, "doInBackground: starts");
         String destURII = createUri(language);
 
@@ -86,7 +85,7 @@ class GetJSONDataByGenre extends AsyncTask<String, Void, List<Movie>> implements
         grd.runInSameThread(destURII);
         Log.d(TAG, "doInBackground: ends");
 
-        return movieList;
+        return tvShowList;
     }
 
     private String createUri(String language) {
@@ -101,7 +100,7 @@ class GetJSONDataByGenre extends AsyncTask<String, Void, List<Movie>> implements
         Log.d(TAG, "onDownloadComplete status: " + downloadStatus);
 
         if (downloadStatus == DownloadStatus.OK) {
-            movieList = new ArrayList<>();
+            tvShowList = new ArrayList<>();
             ArrayList<Integer> genres = new ArrayList<Integer>();
 
             try {
@@ -114,11 +113,10 @@ class GetJSONDataByGenre extends AsyncTask<String, Void, List<Movie>> implements
 
 
                     JSONObject jMovie = resultsArray.getJSONObject(i);
-                    String title = jMovie.getString("title");
+                    String title = jMovie.getString("name");
                     String vote_avg = jMovie.getString("vote_average");
                     String overview = jMovie.getString("overview");
-                    String trailer = jMovie.getString("video");
-                    String release_date = jMovie.getString("release_date");
+                    String release_date = jMovie.getString("first_air_date");
                     String poster = jMovie.getString("poster_path");
                     String id = jMovie.getString("id");
                     double popularity = jMovie.getDouble("popularity");
@@ -138,8 +136,8 @@ class GetJSONDataByGenre extends AsyncTask<String, Void, List<Movie>> implements
                     // Discover size poster request ==>  https://image.tmdb.org/t/p/w92/fILTFOc4uV1mYL0qkoc3LyG1Jo9.jpg
 
 
-                    Movie movie = new Movie(id, Boolean.parseBoolean(trailer), Double.parseDouble(vote_avg), title, popularity, posterLink, overview, release_date, (ArrayList<Integer>)genereList);
-                    movieList.add(movie);
+                    TvShow tvShow = new TvShow(id, Double.parseDouble(vote_avg), title, popularity, posterLink, overview, release_date, (ArrayList<Integer>)genereList);
+                    tvShowList.add(tvShow);
 
 
 
@@ -157,7 +155,7 @@ class GetJSONDataByGenre extends AsyncTask<String, Void, List<Movie>> implements
         //callback is only called if running on same thread
         if (runningOnSameThread && callBack != null) {
             //notify processing is done
-            callBack.onDataReady(movieList, downloadStatus);
+            callBack.onDataReadyTv(tvShowList, downloadStatus);
         }
 
         Log.d(TAG, "onDownloadComplete: ends");

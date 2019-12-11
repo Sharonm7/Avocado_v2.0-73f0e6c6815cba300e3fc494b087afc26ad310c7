@@ -15,7 +15,8 @@
         android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".RecommendedMovies"></activity>
+        <activity android:name=".RecommendedTvShows"></activity>
+        <activity android:name=".RecommendedMovies" />
         <activity android:name=".SearchMoviesActivity" />
         <activity android:name=".FavoriteMovies" />
         <activity android:name=".TvShowDetailActivity" />
@@ -32,7 +33,6 @@
         <activity android:name=".EventDialog" />
         <activity android:name=".CalendarActivity" />
         <activity android:name=".MovieDetailActivity" />
-
         <activity
             android:name=".ProfilePage"
             android:parentActivityName=".HomePage">

@@ -76,6 +76,11 @@ public class OptionsMenu extends AppCompatActivity
                 startActivity(RecommendedIntent);
                 return true;
 
+            case R.id.action_recommendedTv:
+                Intent RecommendedTvIntent = new Intent(this, RecommendedTvShows.class);
+                startActivity(RecommendedTvIntent);
+                return true;
+
 
 
             case R.id.action_accountId:

@@ -625,6 +625,10 @@ public class HomePage extends AppCompatActivity
                 Intent recommendedMoviesIntent = new Intent(this, RecommendedMovies.class);
                 startActivity(recommendedMoviesIntent);
                 return true;
+            case R.id.action_recommendedTv:
+                Intent recommendedTvIntent = new Intent(this, RecommendedTvShows.class);
+                startActivity(recommendedTvIntent);
+                return true;
 
             case R.id.action_calendar:
                 Intent CalendarIntent = new Intent(this, CalendarActivity.class);
