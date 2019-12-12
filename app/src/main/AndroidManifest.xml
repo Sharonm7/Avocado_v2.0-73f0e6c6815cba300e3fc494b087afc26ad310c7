@@ -26,7 +26,7 @@
             android:value="@string/Calendar_API_KEY" />
 
         <activity android:name=".BaseActivity" />
-        <activity android:name=".LoginPage" />
+        <activity android:name=".HomePage" />
         <activity android:name=".ChooseGenresPage" />
         <activity android:name=".RegisterPage" />
         <activity android:name=".EventListAdapter" />
@@ -40,7 +40,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".LoginPage" />
         </activity>
-        <activity android:name=".HomePage">
+        <activity android:name=".LoginPage">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
