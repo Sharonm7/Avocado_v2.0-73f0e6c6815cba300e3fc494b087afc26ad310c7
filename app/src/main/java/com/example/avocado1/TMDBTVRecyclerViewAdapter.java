@@ -69,13 +69,15 @@ class TMDBTVRecyclerViewAdapter extends RecyclerView.Adapter<TMDBTVRecyclerViewA
         final TvShow tvShowItem = mTvShowList.get(position);
         //Log.d(TAG, "onBindViewHolder: " + tvShowItem.getTitle() + "==>" + position);
        Picasso.get().load(tvShowItem.getPoster_path())
-                .error(R.drawable.baseline_broken_image_black_48dp)
-                .placeholder(R.drawable.baseline_broken_image_black_48dp)
-                .placeholder(R.drawable.baseline_broken_image_black_48dp)
+                .error(R.drawable.movieimage)
+                .placeholder(R.drawable.movieimage)
+                .placeholder(R.drawable.movieimage)
                 .into(holder.tvshowPoster);
 
         holder.title.setText(tvShowItem.getTitle());
         holder.overview.setText(tvShowItem.getOverview());
+        holder.tvvoteAvg.setText("ציון ממוצע:"+String.valueOf(tvShowItem.getVote_average()));
+        holder.tvreleaseDate.setText("תאריך יציאה:"+tvShowItem.getRelease_date());
 /*
         holder.moviePoster.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,6 +134,8 @@ class TMDBTVRecyclerViewAdapter extends RecyclerView.Adapter<TMDBTVRecyclerViewA
         TextView title = null;
         TextView overview= null;
         Button followBtn;
+        TextView tvvoteAvg= null;
+        TextView tvreleaseDate= null;
 
 
         //TextView overview = null;
@@ -145,6 +149,8 @@ class TMDBTVRecyclerViewAdapter extends RecyclerView.Adapter<TMDBTVRecyclerViewA
             this.title = (TextView)itemView.findViewById(R.id.tvshowTitle);
             this.overview = (TextView)itemView.findViewById(R.id.tvshowOverview);
             this.followBtn= (Button) itemView.findViewById(R.id.followBtn);
+            this.tvvoteAvg= (TextView) itemView.findViewById(R.id.tvVoteAvg);
+            this.tvreleaseDate= (TextView) itemView.findViewById(R.id.tvRelease_date);
 
 
         }

@@ -1,7 +1,6 @@
 package com.example.avocado1;
 
 import android.content.Context;
-import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,30 +9,18 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.example.avocado1.DatabaseAccess;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
-import java.util.Map;
 
 
 class TMDBRecyclerViewAdapter extends RecyclerView.Adapter<TMDBRecyclerViewAdapter.TMDBMovieHolder> {
@@ -74,13 +61,16 @@ class TMDBRecyclerViewAdapter extends RecyclerView.Adapter<TMDBRecyclerViewAdapt
         final Movie movieItem = mMoviesList.get(position);
         Log.d(TAG, "onBindViewHolder: " + movieItem.getTitle() + "==>" + position);
         Picasso.get().load(movieItem.getPoster_path())
-                .error(R.drawable.baseline_broken_image_black_48dp)
-                .placeholder(R.drawable.baseline_broken_image_black_48dp)
-                .placeholder(R.drawable.baseline_broken_image_black_48dp)
+                .error(R.drawable.movieimage)
+                .placeholder(R.drawable.movieimage)
+                .placeholder(R.drawable.movieimage)
                 .into(holder.moviePoster);
 
         holder.title.setText(movieItem.getTitle());
-        holder.overview.setText(movieItem.getOverview());
+        holder.overview.setText("תקציר:"+movieItem.getOverview());
+        holder.voteAvg.setText("ציון ממוצע:"+String.valueOf(movieItem.getVote_average()));
+        holder.releaseDate.setText("תאריך יציאה:"+movieItem.getRelease_date());
+
 
 
 
@@ -115,6 +105,8 @@ class TMDBRecyclerViewAdapter extends RecyclerView.Adapter<TMDBRecyclerViewAdapt
         ImageView moviePoster = null;
         TextView title = null;
         TextView overview = null;
+        TextView voteAvg= null;
+        TextView releaseDate= null;
         Button followBtn;
 
 
@@ -128,6 +120,8 @@ class TMDBRecyclerViewAdapter extends RecyclerView.Adapter<TMDBRecyclerViewAdapt
             this.title = (TextView) itemView.findViewById(R.id.movieTitle);
             this.overview = (TextView) itemView.findViewById(R.id.movieOverview);
             this.followBtn = (Button) itemView.findViewById(R.id.followBtn);
+            this.voteAvg= (TextView) itemView.findViewById(R.id.movieVoteAvg);
+            this.releaseDate= (TextView) itemView.findViewById(R.id.movieRelease_date);
 
 
         }

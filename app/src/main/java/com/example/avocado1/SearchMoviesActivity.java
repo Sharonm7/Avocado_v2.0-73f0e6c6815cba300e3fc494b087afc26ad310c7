@@ -71,12 +71,10 @@ public class SearchMoviesActivity extends AppCompatActivity
 
         switch (item.getItemId()) {
 
-
             case R.id.action_homeId:
                 Intent HomeIntent = new Intent(this, HomePage.class);
                 startActivity(HomeIntent);
                 return true;
-
 
 
             case R.id.action_accountId:
@@ -102,6 +100,20 @@ public class SearchMoviesActivity extends AppCompatActivity
                 startActivity(TvShowsIntent);
                 return true;
 
+            case R.id.search_movies:
+                Intent searchMoviesIntent = new Intent(this, SearchMoviesActivity.class);
+                startActivity(searchMoviesIntent);
+                return true;
+
+            case R.id.action_recommended:
+                Intent recommendedMoviesIntent = new Intent(this, RecommendedMovies.class);
+                startActivity(recommendedMoviesIntent);
+                return true;
+            case R.id.action_recommendedTv:
+                Intent recommendedTvIntent = new Intent(this, RecommendedTvShows.class);
+                startActivity(recommendedTvIntent);
+                return true;
+
             case R.id.action_calendar:
                 Intent CalendarIntent = new Intent(this, CalendarActivity.class);
                 startActivity(CalendarIntent);
@@ -124,10 +136,7 @@ public class SearchMoviesActivity extends AppCompatActivity
 
             default:
                 return super.onOptionsItemSelected(item);
-
         }
-
-
     }
 
     public boolean onNavigationItemSelected(MenuItem item) {

@@ -29,24 +29,32 @@
 
                 <ImageView
                     android:id="@+id/moviePoster"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
                     android:layout_margin="8dp"
                     android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/baseline_movie_black_48" />
+                    android:layout_gravity="center"
+                    android:src="@drawable/movieimage"/>
+<!--                    app:srcCompat="@drawable/movieimage"-->
+<!--                    />-->
 
                 <TextView
                     android:id="@+id/movieTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:text="TextView" />
+                    android:scaleType="fitCenter"
+                    android:layout_gravity="center"
+                    android:text="TextView"
+                    android:textSize="30dp"/>
 
                 <TextView
                     android:id="@+id/movieMetaData"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
+                    android:scaleType="fitCenter"
+                    android:layout_gravity="center"
                     android:text="" />
 
                 <TextView
@@ -54,14 +62,43 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
+                    android:scaleType="fitCenter"
+                    android:layout_gravity="center"
+                    android:text="TextView" />
+
+                <TextView
+                    android:id="@+id/movieVoteAvg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:scaleType="fitCenter"
+                    android:layout_gravity="center"
+                    android:text="TextView" />
+
+                <TextView
+                    android:id="@+id/movieRelease_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:scaleType="fitCenter"
+                    android:layout_gravity="center"
                     android:text="TextView" />
 
                 <Button
                     android:id="@+id/followBtn"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:text="עקוב" />
+                    android:text="עקוב"
+                    android:textColor="#FFFFFF"
+                    android:textSize="21sp"
+                    android:layout_width="100dp"
+                    android:layout_height="38dp"
+                    android:background="@drawable/follow_btn_shape"
+                    android:shadowColor="#A8A8A8"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="5"
+                    android:scaleType="fitCenter"
+                    android:layout_gravity="center"
+                    />
 
 
 

@@ -318,7 +318,7 @@ public class HomePage extends AppCompatActivity
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                Map<String, Object> td = (HashMap<String, Object>) dataSnapshot.getValue();
+                Map<String, Movie> td = (HashMap<String, Movie>) dataSnapshot.getValue();
 //                List<Object> values = (List<Object>) td.values();
                 final ArrayList<Movie> movieArrayList = new ArrayList<>();
                if (td.entrySet() != null) {
@@ -391,8 +391,9 @@ public class HomePage extends AppCompatActivity
         linearLayout.addView(imageViewDisplayMoviesPoster);
 
         Button followBtn= new Button(this);
+        //followBtn.findViewById(R.id.removefollow);
         followBtn.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
-        followBtn.setText("הסר");
+       // followBtn.setText("הסר");
         linearLayout.addView(followBtn);
 
         followBtn.setOnClickListener(new View.OnClickListener() {

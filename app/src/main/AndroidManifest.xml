@@ -34,13 +34,6 @@
         <activity android:name=".CalendarActivity" />
         <activity android:name=".MovieDetailActivity" />
         <activity
-            android:name=".ProfilePage"
-            android:parentActivityName=".HomePage">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".HomePage" />
-        </activity>
-        <activity
             android:name=".AccountPage"
             android:parentActivityName=".LoginPage">
             <meta-data

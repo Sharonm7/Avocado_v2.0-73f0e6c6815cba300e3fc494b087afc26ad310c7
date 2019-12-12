@@ -196,7 +196,7 @@ public class RegisterPage extends AppCompatActivity {
 
                             Toast.makeText(RegisterPage.this, "User auth was created!", Toast.LENGTH_LONG).show();
                             UserProfile();
-                            startActivity(new Intent(RegisterPage.this, HomePage.class));
+                            startActivity(new Intent(RegisterPage.this, ChooseGenresPage.class));
 
                         } else {
                             if (task.getException() instanceof FirebaseAuthUserCollisionException) {

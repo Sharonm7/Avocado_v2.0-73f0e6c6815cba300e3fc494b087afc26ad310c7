@@ -198,7 +198,6 @@ public class AccountPage extends AppCompatActivity
                 return true;
 
 
-
             case R.id.action_accountId:
                 Intent AccountIntent = new Intent(this, AccountPage.class);
                 startActivity(AccountIntent);
@@ -213,11 +212,32 @@ public class AccountPage extends AppCompatActivity
                 return true;
 
             case R.id.action_moviesId:
-                Toast.makeText(this, "movies selected", Toast.LENGTH_LONG).show();
+                Intent MovieIntent = new Intent(this, MovieDetailActivity.class);
+                startActivity(MovieIntent);
                 return true;
 
             case R.id.action_tvShowsId:
-                Toast.makeText(this, "tvShows selected", Toast.LENGTH_LONG).show();
+                Intent TvShowsIntent = new Intent(this, TvShowDetailActivity.class);
+                startActivity(TvShowsIntent);
+                return true;
+
+            case R.id.search_movies:
+                Intent searchMoviesIntent = new Intent(this, SearchMoviesActivity.class);
+                startActivity(searchMoviesIntent);
+                return true;
+
+            case R.id.action_recommended:
+                Intent recommendedMoviesIntent = new Intent(this, RecommendedMovies.class);
+                startActivity(recommendedMoviesIntent);
+                return true;
+            case R.id.action_recommendedTv:
+                Intent recommendedTvIntent = new Intent(this, RecommendedTvShows.class);
+                startActivity(recommendedTvIntent);
+                return true;
+
+            case R.id.action_calendar:
+                Intent CalendarIntent = new Intent(this, CalendarActivity.class);
+                startActivity(CalendarIntent);
                 return true;
 
 
@@ -237,9 +257,7 @@ public class AccountPage extends AppCompatActivity
 
             default:
                 return super.onOptionsItemSelected(item);
-
         }
-
 
     }
     }

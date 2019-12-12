@@ -110,6 +110,20 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
+                <Button
+                    android:id="@+id/removefollow"
+                    android:text="הסר"
+                    android:textColor="#FFFFFF"
+                    android:textSize="21sp"
+                    android:layout_width="100dp"
+                    android:layout_height="38dp"
+                    android:background="@drawable/follow_btn_shape"
+                    android:shadowColor="#A8A8A8"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="5"
+                    android:visibility="gone"/>
+
 
 
 
