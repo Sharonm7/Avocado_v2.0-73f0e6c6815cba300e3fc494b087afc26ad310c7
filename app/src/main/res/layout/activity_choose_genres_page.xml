@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ChooseGenresPage">
+    tools:context=".ChooseGenresPage"
+    android:background="#84ada4">
 
     <CheckBox
         android:id="@+id/check_scifi"
@@ -233,7 +234,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
-        android:text="מה אתה אוהב לראות?"
+        android:text="אילו ז'אנרים מועדפים עליך?"
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -290,7 +291,8 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.962" />
+        app:layout_constraintVertical_bias="0.962"
+        android:background="#227a70"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,8 +7,10 @@ import androidx.appcompat.widget.Toolbar;
 import android.content.Intent;
 
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -222,9 +224,8 @@ public class HomePage extends AppCompatActivity
             Button genresBtn = new Button(this);
             linearLayout.addView(genresBtn);
             genresBtn.setText(genresList.get(i));
-            //genresBtn.setBackgroundColor(Color.RED);
+            genresBtn.setBackgroundColor(Color.parseColor("#227a70"));
 
-            //genresBtn.getBackground().setColorFilter(new LightingColorFilter(0xFFFFFFFF, color));
 
         }
 
@@ -382,21 +383,34 @@ public class HomePage extends AppCompatActivity
             TextView textViewDisplayMovies= new TextView(this);
             textViewDisplayMovies.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
             textViewDisplayMovies.setText(movie.getTitle());
-
+            textViewDisplayMovies.setGravity(Gravity.CENTER);
+            textViewDisplayMovies.setTextSize(20);
             linearLayout.addView(textViewDisplayMovies);
 
-           ImageView imageViewDisplayMoviesPoster= new ImageView(this);
-        imageViewDisplayMoviesPoster.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+
+            ImageView imageViewDisplayMoviesPoster= new ImageView(this);
+        imageViewDisplayMoviesPoster.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         Picasso.get().load(movie.getPoster_path()).into(imageViewDisplayMoviesPoster);
+        LinearLayout.LayoutParams layoutParams =new LinearLayout.LayoutParams(250,250);
+        layoutParams.gravity=Gravity.CENTER;
+        imageViewDisplayMoviesPoster.setLayoutParams(layoutParams);
         linearLayout.addView(imageViewDisplayMoviesPoster);
 
-        Button followBtn= new Button(this);
-        //followBtn.findViewById(R.id.removefollow);
-        followBtn.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
-       // followBtn.setText("הסר");
-        linearLayout.addView(followBtn);
 
-        followBtn.setOnClickListener(new View.OnClickListener() {
+
+        Button unfollowBtn= new Button(this);
+        unfollowBtn.setBackgroundResource(R.drawable.follow_btn_shape);
+        unfollowBtn.setText("הסר");
+        unfollowBtn.setTextColor(Color.WHITE);
+        unfollowBtn.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        LinearLayout.LayoutParams layoutParamsBtn =new LinearLayout.LayoutParams(100,70);
+        layoutParamsBtn.gravity=Gravity.CENTER;
+        unfollowBtn.setLayoutParams(layoutParamsBtn);
+        linearLayout.addView(unfollowBtn);
+
+
+
+        unfollowBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DeleteFollowingMovie(movie);
@@ -435,21 +449,44 @@ public class HomePage extends AppCompatActivity
         TextView textViewDisplayTvShows= new TextView(this);
         textViewDisplayTvShows.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
         textViewDisplayTvShows.setText(tvShow.getTitle());
-
+        textViewDisplayTvShows.setGravity(Gravity.CENTER);
+        textViewDisplayTvShows.setTextSize(20);
         linearLayout.addView(textViewDisplayTvShows);
 
+
+
+
         ImageView imageViewDisplayTvShowsPoster= new ImageView(this);
-        imageViewDisplayTvShowsPoster.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+        imageViewDisplayTvShowsPoster.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         Picasso.get().load(tvShow.getPoster_path()).into(imageViewDisplayTvShowsPoster);
+        LinearLayout.LayoutParams layoutParams =new LinearLayout.LayoutParams(250,250);
+        layoutParams.gravity=Gravity.CENTER;
+        imageViewDisplayTvShowsPoster.setLayoutParams(layoutParams);
         linearLayout.addView(imageViewDisplayTvShowsPoster);
 
 
-        Button followBtn= new Button(this);
-        followBtn.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
-        followBtn.setText("הסר");
-        linearLayout.addView(followBtn);
 
-        followBtn.setOnClickListener(new View.OnClickListener() {
+
+
+
+
+        Button unfollowBtn= new Button(this);
+        unfollowBtn.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        unfollowBtn.setBackgroundResource(R.drawable.follow_btn_shape);
+        unfollowBtn.setText("הסר");
+        unfollowBtn.setTextColor(Color.WHITE);
+        LinearLayout.LayoutParams layoutParamsBtn =new LinearLayout.LayoutParams(100,70);
+        layoutParamsBtn.gravity=Gravity.CENTER;
+        unfollowBtn.setLayoutParams(layoutParamsBtn);
+        linearLayout.addView(unfollowBtn);
+
+
+
+
+
+
+
+        unfollowBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DeleteFollowingTvShow(tvShow);

@@ -10,6 +10,7 @@
     tools:layout_editor_absoluteX="8dp"
     tools:layout_editor_absoluteY="8dp"
     android:gravity="right"
+    android:background="#84ada4"
 
 
     >

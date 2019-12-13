@@ -15,16 +15,18 @@
         android:orientation="vertical"
         android:layout_alignParentTop="true"
         android:layout_height="wrap_content"
-        android:id="@+id/linearLayout">
+        android:id="@+id/linearLayout"
+        android:background="#84ada4">
 
         <TextView
             android:id="@+id/helloUser"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="50dp"
             android:text=""
-            android:textSize="30dp"
-            android:textAlignment="center"/>
+            android:fontFamily="@font/aclonica"
+            android:textSize="50dp"
+            android:gravity="center"/>
 
         <TextView
             android:id="@+id/selectedGenresText"
@@ -32,8 +34,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:textSize="30dp"
-            android:text="הזאנרים שלך:"
-            android:textAlignment="center" />
+            android:text="הזאנרים שבחרת:"
+            android:gravity="center"
+            android:fontFamily="@font/aclonica"/>
 
         <TextView
             android:id="@+id/genres"
@@ -41,6 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="150dp"
             android:text=""
+            android:gravity="center"
             android:visibility="gone"/>
 
         <LinearLayout
@@ -48,6 +52,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:gravity="center"
+
             >
         </LinearLayout>
 
@@ -69,15 +75,17 @@
         android:layout_width="match_parent"
         android:layout_alignBottom="@+id/linearLayout"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+            android:background="#bcdfc1">
 
             <TextView
                 android:id="@+id/textFollowingMovies"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="התכן שלך:"
+                android:fontFamily="@font/aclonica"
                 android:textSize="30dp"
-                android:textAlignment="center" />
+                android:gravity="center" />
 
 
 
