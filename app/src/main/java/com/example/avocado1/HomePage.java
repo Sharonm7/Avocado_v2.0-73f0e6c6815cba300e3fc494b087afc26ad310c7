@@ -106,8 +106,8 @@ public class HomePage extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         loadUserInformation();
-       updateGenres(genresList);
-         DisplayGenres(buttons);
+        updateGenres(genresList);
+        DisplayGenres(buttons);
         setOnMoviesListener();
         setOnTvShowsListener();
 
@@ -624,6 +624,11 @@ public class HomePage extends AppCompatActivity
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         switch (item.getItemId()) {
+
+            case R.id.action_searchId:
+                Intent intent = new Intent(this, SearchActivity.class);
+                startActivity(intent);
+                return true;
 
             case R.id.action_homeId:
                 Intent HomeIntent = new Intent(this, HomePage.class);

@@ -6,12 +6,13 @@
 
 <group android:checkableBehavior="single">
 
-<item
-    android:id="@+id/action_searchId"
-    android:title="חיפוש"
-    android:icon="@mipmap/ic_search"
-    app:showAsAction="always"
-    app:actionViewClass="androidx.appcompat.widget.SearchView"/>
+    <item
+        android:id="@+id/action_searchId"
+        android:icon="@color/common_google_signin_btn_text_dark_focused"
+        android:title="חיפוש"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        app:showAsAction="ifRoom|collapseActionView" />
+    <!--app:showAsAction="ifRoom|collapseActionView"-->
 
     <item
         android:id="@+id/action_homeId"

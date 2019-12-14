@@ -37,4 +37,8 @@
 
 
     <string name="createEventLocation">Location</string>
+    <string name="title_activity_search">Search Activity</string>
+    <string name="search">חיפוש</string>
+    <string name="search_hint">הקלד שם לחיפוש..</string>
+    <string name="title_activity_search_results">Search Results Activity</string>
 </resources>
