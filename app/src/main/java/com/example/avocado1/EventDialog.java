@@ -201,6 +201,7 @@ return null;
         System.out.println("Now is:"+now);
 
 
+
         if(getDate(movieDate).before(now)) {
             System.out.println("you cannot follow");
 

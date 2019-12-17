@@ -130,12 +130,12 @@ public class LoginPage extends BaseActivity {
                                      }
                              });
 
-                             Toast.makeText(LoginPage.this,"Hello "+userEmail,Toast.LENGTH_LONG).show();
+                             //Toast.makeText(LoginPage.this,"Hello "+userEmail,Toast.LENGTH_LONG).show();
 
 
                              if(currentUser != null)
                              {
-                                 Intent intent = new Intent(LoginPage.this, HomePage.class);
+                                 Intent intent = new Intent(LoginPage.this, AccountPage.class);
                                  startActivity(intent);
                              }
                          }

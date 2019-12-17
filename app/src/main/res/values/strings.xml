@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name"></string>
+    <string name="app_name">AVOCADO</string>
     <string name="Calendar_API_KEY">AIzaSyDUGzt27EWNyosxT0qr-0X_awsslSfBhEM</string>
     <string name="title_activity_home_page">HomePage</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>

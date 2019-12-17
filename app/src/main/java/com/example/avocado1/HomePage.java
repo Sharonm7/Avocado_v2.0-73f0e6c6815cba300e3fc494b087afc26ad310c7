@@ -103,13 +103,20 @@ public class HomePage extends AppCompatActivity
 
         toolbar = findViewById(R.id.toolbarId);
         emailNav = findViewById(R.id.emailNavBarId);
-        setSupportActionBar(toolbar);
+//        setSupportActionBar(toolbar);
 
         loadUserInformation();
+<<<<<<< Updated upstream
         updateGenres(genresList);
         DisplayGenres(buttons);
         setOnMoviesListener();
+=======
+       updateGenres(genresList);
+         DisplayGenres(buttons);
+       setOnMoviesListener();
+>>>>>>> Stashed changes
         setOnTvShowsListener();
+
 
 
 
@@ -130,6 +137,7 @@ public class HomePage extends AppCompatActivity
 
         if (fbUser.getDisplayName() != null) {
             textViewDisplayName.setText("ברוכים הבאים,  " + fbUser.getDisplayName() + "!");
+            Log.d("ggg", fbUser.getDisplayName());
         }
 
 
@@ -213,7 +221,6 @@ public class HomePage extends AppCompatActivity
 
 
         List<String> genresList = Arrays.asList(genreStr.split("\\s*,\\s*"));
-        Toast.makeText(HomePage.this, "genres list from func: " + genresList, Toast.LENGTH_LONG).show();
 
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.buttonsLayout);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -242,7 +249,9 @@ public class HomePage extends AppCompatActivity
 
     }
 
-    private void setOnTvShowsListener(){
+    public void setOnTvShowsListener(){
+
+
 
         mAuth = FirebaseAuth.getInstance();
         TvShowsRef = FirebaseDatabase.getInstance().getReference("Users").child(mAuth.getCurrentUser().getDisplayName()).child("followingTvShows");
@@ -302,13 +311,16 @@ public class HomePage extends AppCompatActivity
             public void onCancelled(DatabaseError databaseError) {
             }
         });
+
+
+       // DeleteEmptyMovie();
     }
 
 
 
 
 
-    private void setOnMoviesListener() {
+    public void setOnMoviesListener() {
 
             mAuth = FirebaseAuth.getInstance();
             moviesRef = FirebaseDatabase.getInstance().getReference("Users").child(mAuth.getCurrentUser().getDisplayName()).child("followingMovies");
@@ -516,6 +528,22 @@ public class HomePage extends AppCompatActivity
     }
 
 
+
+    public void DeleteEmptyMovie(){
+        mAuth = FirebaseAuth.getInstance();
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+        Query query = ref.child("Users").child(mAuth.getCurrentUser().getDisplayName()).child("followingTvShows").child("0");
+
+        query.getRef().removeValue();
+        finish();
+        startActivity(getIntent());
+
+
+
+    }
+
+
     public void DeleteFollowingMovie(Movie movie){
 
         mAuth = FirebaseAuth.getInstance();
@@ -575,28 +603,6 @@ public class HomePage extends AppCompatActivity
 
 
 
-//    private void createUser() {
-//        if (user == null) {
-//            this.user = new User();
-//
-//        }
-//        this.user.setEmail((String) userMap.get("email"));
-//        if (userMap.get("followingMovies") != null)
-//            this.user.setFollowingMovies((List<Movie>) userMap.get("followingMovies"));
-//
-//        if (userMap.get("followingTvShows") != null)
-//            this.user.setFollowingTvShows((ArrayList<TvShow>) userMap.get("followingTvShows"));
-//        this.user.setId((String) userMap.get("id"));
-//        this.user.setUsername((String) userMap.get("userName"));
-//        if (userMap.get("preferences") != null)
-//            this.user.setPreferences((ArrayList<String>) userMap.get("preferences"));
-//        this.user.setPassword((String) userMap.get("password"));
-//
-//
-//        //  displayFollowingMovies();
-//
-//
-//    }
 
 
 
@@ -641,13 +647,7 @@ public class HomePage extends AppCompatActivity
                 startActivity(AccountIntent);
                 return true;
 
-            case R.id.action_notificationId:
-                Toast.makeText(this, "notifications selected", Toast.LENGTH_LONG).show();
-                return true;
 
-            case R.id.action_genresId:
-                Toast.makeText(this, "genres selected", Toast.LENGTH_LONG).show();
-                return true;
 
             case R.id.action_moviesId:
                 Intent MovieIntent = new Intent(this, MovieDetailActivity.class);
@@ -673,10 +673,6 @@ public class HomePage extends AppCompatActivity
                 startActivity(recommendedTvIntent);
                 return true;
 
-            case R.id.action_calendar:
-                Intent CalendarIntent = new Intent(this, CalendarActivity.class);
-                startActivity(CalendarIntent);
-                return true;
 
 
             case R.id.action_signOutId:

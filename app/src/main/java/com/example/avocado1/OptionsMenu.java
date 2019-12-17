@@ -88,13 +88,7 @@ public class OptionsMenu extends AppCompatActivity
                 startActivity(AccountIntent);
                 return true;
 
-            case R.id.action_notificationId:
-                Toast.makeText(this, "notifications selected", Toast.LENGTH_LONG).show();
-                return true;
 
-            case R.id.action_genresId:
-                startActivity(new Intent(OptionsMenu.this, ChooseGenresPage.class));
-                return true;
 
             case R.id.action_moviesId:
                 Toast.makeText(this, "movies selected", Toast.LENGTH_LONG).show();

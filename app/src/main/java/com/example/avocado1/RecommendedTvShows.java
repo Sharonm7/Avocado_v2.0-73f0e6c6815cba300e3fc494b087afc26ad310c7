@@ -61,7 +61,7 @@ public class RecommendedTvShows extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
         Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        //setSupportActionBar(toolbar);
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler2);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -97,13 +97,7 @@ public class RecommendedTvShows extends AppCompatActivity
                 startActivity(AccountIntent);
                 return true;
 
-            case R.id.action_notificationId:
-                Toast.makeText(this, "notifications selected", Toast.LENGTH_LONG).show();
-                return true;
 
-            case R.id.action_genresId:
-                Toast.makeText(this, "genres selected", Toast.LENGTH_LONG).show();
-                return true;
 
             case R.id.action_moviesId:
                 Intent MovieIntent = new Intent(this, MovieDetailActivity.class);
@@ -129,10 +123,6 @@ public class RecommendedTvShows extends AppCompatActivity
                 startActivity(recommendedTvIntent);
                 return true;
 
-            case R.id.action_calendar:
-                Intent CalendarIntent = new Intent(this, CalendarActivity.class);
-                startActivity(CalendarIntent);
-                return true;
 
 
             case R.id.action_signOutId:

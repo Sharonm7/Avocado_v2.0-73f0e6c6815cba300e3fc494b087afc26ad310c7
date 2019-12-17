@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -40,6 +41,7 @@ public class RecommendedMovies extends AppCompatActivity
     private static final String TAG = "ViewDatabase";
     private FirebaseAuth mAuth;
     private DatabaseReference moviesRef;
+    private TextView textViewPageName;
 
     private TMDBRecyclerViewAdapter mTMDBRecyclerViewAdapter;
     //List<?> list= new ArrayList<>();
@@ -59,7 +61,7 @@ public class RecommendedMovies extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
         Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        //setSupportActionBar(toolbar);
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler2);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -94,13 +96,6 @@ public class RecommendedMovies extends AppCompatActivity
                 startActivity(AccountIntent);
                 return true;
 
-            case R.id.action_notificationId:
-                Toast.makeText(this, "notifications selected", Toast.LENGTH_LONG).show();
-                return true;
-
-            case R.id.action_genresId:
-                Toast.makeText(this, "genres selected", Toast.LENGTH_LONG).show();
-                return true;
 
             case R.id.action_moviesId:
                 Intent MovieIntent = new Intent(this, MovieDetailActivity.class);
@@ -126,10 +121,7 @@ public class RecommendedMovies extends AppCompatActivity
                 startActivity(recommendedTvIntent);
                 return true;
 
-            case R.id.action_calendar:
-                Intent CalendarIntent = new Intent(this, CalendarActivity.class);
-                startActivity(CalendarIntent);
-                return true;
+
 
 
             case R.id.action_signOutId:

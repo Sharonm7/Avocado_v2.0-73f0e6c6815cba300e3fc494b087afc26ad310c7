@@ -11,6 +11,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.example.avocado1.HomePage;
 
 class GetTMDBJsonData extends AsyncTask<String, Void, List<Movie>> implements GetRawData.OnDownloadComplete {
 
@@ -24,9 +25,12 @@ class GetTMDBJsonData extends AsyncTask<String, Void, List<Movie>> implements Ge
     private boolean runningOnSameThread = false;
 
 
+
     interface OnDataReady{
         void onDataReady(List data, DownloadStatus status);
+
     }
+
 
 
 
@@ -127,6 +131,7 @@ class GetTMDBJsonData extends AsyncTask<String, Void, List<Movie>> implements Ge
                     movieList.add(movie);
 
                     Log.d(TAG, "onDownloadComplete: " + movie.toString());
+
               //  }
             }
             }catch (JSONException e){
@@ -145,4 +150,6 @@ class GetTMDBJsonData extends AsyncTask<String, Void, List<Movie>> implements Ge
         Log.d(TAG, "onDownloadComplete: ends");
 
     }
+
+
 }

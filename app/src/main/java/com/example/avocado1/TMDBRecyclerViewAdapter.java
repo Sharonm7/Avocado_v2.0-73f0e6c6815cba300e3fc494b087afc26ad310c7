@@ -21,6 +21,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.example.avocado1.HomePage;
 
 
 class TMDBRecyclerViewAdapter extends RecyclerView.Adapter<TMDBRecyclerViewAdapter.TMDBMovieHolder> {
@@ -34,6 +35,14 @@ class TMDBRecyclerViewAdapter extends RecyclerView.Adapter<TMDBRecyclerViewAdapt
     private DatabaseReference myRef;
     private List<String> followingMovies;
     private ArrayList<Movie> movieArrayList;
+    public HomePage homePageObject;
+
+
+//    private void setHomePageObject(HomePage homePageObject){
+//       // homePageObject.setOnTvShowsListener();
+//        homePageObject.setOnMoviesListener();
+//    }
+
 
 
     public TMDBRecyclerViewAdapter(Context context, List<Movie> moviesList) {
@@ -132,6 +141,8 @@ class TMDBRecyclerViewAdapter extends RecyclerView.Adapter<TMDBRecyclerViewAdapt
     private void updateMoviesToDataBase(Movie movieItem) {
         myRef = FirebaseDatabase.getInstance().getReference("Users").child(mAuth.getCurrentUser().getDisplayName());
         myRef.child("followingMovies").child(movieItem.getId()).setValue(movieItem);
+
+
 
     }
 

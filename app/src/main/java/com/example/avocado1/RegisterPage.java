@@ -95,7 +95,7 @@ public class RegisterPage extends AppCompatActivity {
 
 
         progressBar.setVisibility(View.GONE);
-        Toast.makeText(RegisterPage.this, "user added to db", Toast.LENGTH_LONG).show();
+        //Toast.makeText(RegisterPage.this, "user added to db", Toast.LENGTH_LONG).show();
 
 
     }
@@ -109,7 +109,7 @@ public class RegisterPage extends AppCompatActivity {
             user.updateProfile(ProfileUpdates).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
-                    Toast.makeText(getApplicationContext(), "user profile updated", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(), "user profile updated", Toast.LENGTH_LONG).show();
                 }
             });
         }
@@ -194,7 +194,7 @@ public class RegisterPage extends AppCompatActivity {
                         progressBar.setVisibility(View.GONE);
                         if (task.isSuccessful()) {
 
-                            Toast.makeText(RegisterPage.this, "User auth was created!", Toast.LENGTH_LONG).show();
+                            //Toast.makeText(RegisterPage.this, "User auth was created!", Toast.LENGTH_LONG).show();
                             UserProfile();
                             startActivity(new Intent(RegisterPage.this, ChooseGenresPage.class));
 

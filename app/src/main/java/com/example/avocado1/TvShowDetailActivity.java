@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -33,6 +34,7 @@ public class TvShowDetailActivity extends AppCompatActivity
     private static final String TAG = "ViewDatabase";
 
     private TMDBTVRecyclerViewAdapter mTMDBTVRecyclerViewAdapter;
+    private TextView textViewPageName;
 
     private static final String baseURL ="https://api.themoviedb.org/3/tv/popular?api_key=5ba2372e5f26794510a9b0987dddf17b&language=he-IL&page=1";
     //private static final String baseURI ="https://api.themoviedb.org/3";
@@ -49,7 +51,7 @@ public class TvShowDetailActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tv_show_detail);
         Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+//        setSupportActionBar(toolbar);
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler2);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -89,13 +91,6 @@ public class TvShowDetailActivity extends AppCompatActivity
                 startActivity(AccountIntent);
                 return true;
 
-            case R.id.action_notificationId:
-                Toast.makeText(this, "notifications selected", Toast.LENGTH_LONG).show();
-                return true;
-
-            case R.id.action_genresId:
-                Toast.makeText(this, "genres selected", Toast.LENGTH_LONG).show();
-                return true;
 
             case R.id.action_moviesId:
                 Intent MovieIntent = new Intent(this, MovieDetailActivity.class);
@@ -121,10 +116,6 @@ public class TvShowDetailActivity extends AppCompatActivity
                 startActivity(recommendedTvIntent);
                 return true;
 
-            case R.id.action_calendar:
-                Intent CalendarIntent = new Intent(this, CalendarActivity.class);
-                startActivity(CalendarIntent);
-                return true;
 
 
             case R.id.action_signOutId:

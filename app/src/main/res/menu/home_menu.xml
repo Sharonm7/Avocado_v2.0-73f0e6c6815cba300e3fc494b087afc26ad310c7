@@ -30,16 +30,6 @@
 
 
 
-    <item
-        android:id="@+id/action_notificationId"
-        android:icon="@mipmap/ic_notification"
-        android:title="התראות"
-        app:showAsAction="never"/>
-
-    <item
-        android:id="@+id/action_genresId"
-        android:title="ז'אנרים"
-        app:showAsAction="never"/>
 
     <item
     android:id="@+id/action_moviesId"
@@ -64,10 +54,6 @@
         android:title="סדרות מומלצות עבורך"
         app:showAsAction="never"/>
 
-    <item
-        android:id="@+id/action_calendar"
-        android:title="לוח שנה"
-        app:showAsAction="never"/>
 
 
     <item
